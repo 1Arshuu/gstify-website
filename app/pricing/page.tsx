@@ -117,7 +117,7 @@ export default function Pricing() {
       </section>
 
       {/* FAQ-style mini section */}
-      <section className="band-dark noise-overlay py-20">
+      <section className="surface-warm noise-overlay py-20">
         <div className="container mx-auto px-3 sm:px-6 max-w-3xl">
           <SectionHeading
             eyebrow="No surprises"
@@ -131,12 +131,12 @@ export default function Pricing() {
               { q: 'Bill annually?',   a: 'Yes, save 37–38% by paying yearly.' },
               { q: 'Cancel anytime?',  a: 'Cancel from Google Play. Effective end of current billing cycle.' },
             ].map((f) => (
-              <Reveal key={f.q} className="dark-card rounded-2xl p-5">
-                <p className="text-[11px] font-extrabold uppercase tracking-wider text-champagne/80 mb-1"
+              <Reveal key={f.q} className="app-card rounded-2xl p-5">
+                <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#7A5E2A] mb-1.5"
                    style={{ letterSpacing: '0.14em' }}>
                   {f.q}
                 </p>
-                <p className="text-sm text-cream/80 leading-relaxed">{f.a}</p>
+                <p className="text-sm leading-relaxed" style={{ color: '#6B6B6B' }}>{f.a}</p>
               </Reveal>
             ))}
           </div>

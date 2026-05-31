@@ -3,6 +3,7 @@ import { Jost, Cormorant_Garamond, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { CursorGlow } from '@/components/CursorGlow';
 import { BRAND } from '@/lib/brand';
 
 // Body / UI — geometric sans
@@ -49,6 +50,12 @@ export const metadata: Metadata = {
     'free GST app',
   ],
   authors: [{ name: BRAND.name }],
+  creator: BRAND.name,
+  publisher: BRAND.name,
+  category: 'business',
+  applicationName: BRAND.name,
+  alternates: { canonical: '/' },
+  // OG/Twitter images come from app/opengraph-image.tsx (generated at build).
   openGraph: {
     title:       `${BRAND.name} — ${BRAND.tagline}`,
     description: 'GST invoices in 5 seconds. Right from your phone. Offline-first. Built for Indian SMBs.',
@@ -56,23 +63,17 @@ export const metadata: Metadata = {
     siteName:    BRAND.name,
     locale:      'en_IN',
     type:        'website',
-    images: [{ url: '/og.png', width: 1200, height: 630, alt: BRAND.name }],
   },
   twitter: {
     card:        'summary_large_image',
     title:       `${BRAND.name} — ${BRAND.tagline}`,
     description: 'GST invoices in 5 seconds. Offline-first. Built for Indian SMBs.',
-    images:      ['/og.png'],
   },
   robots: {
     index: true, follow: true,
-    googleBot: { index: true, follow: true },
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
   },
-  icons: {
-    icon:        '/favicon.ico',
-    shortcut:    '/favicon.ico',
-    apple:       '/apple-touch-icon.png',
-  },
+  // Icons come from app/icon.png + app/apple-icon.png + app/favicon.ico (file conventions).
   manifest: '/site.webmanifest',
 };
 export const viewport: Viewport = {
@@ -82,11 +83,57 @@ export const viewport: Viewport = {
 };
 
 
+// Structured data (rich results): the publisher, the site, and the app itself.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${BRAND.url}/#organization`,
+      name: BRAND.name,
+      url: BRAND.url,
+      logo: `${BRAND.url}/icon-512.png`,
+      email: BRAND.email,
+      sameAs: [BRAND.playStoreUrl],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${BRAND.url}/#website`,
+      url: BRAND.url,
+      name: BRAND.name,
+      description: `${BRAND.tagline}. Built for Indian SMBs.`,
+      publisher: { '@id': `${BRAND.url}/#organization` },
+      inLanguage: 'en-IN',
+    },
+    {
+      '@type': 'SoftwareApplication',
+      '@id': `${BRAND.url}/#app`,
+      name: BRAND.name,
+      operatingSystem: 'Android',
+      applicationCategory: 'BusinessApplication',
+      description:
+        'Create GST invoices, e-way bills, delivery challans and quotations in seconds. ' +
+        'Track payments, auto-backup to Google Drive, works offline.',
+      url: BRAND.url,
+      downloadUrl: BRAND.playStoreUrl,
+      installUrl: BRAND.playStoreUrl,
+      publisher: { '@id': `${BRAND.url}/#organization` },
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' },
+    },
+  ],
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning
           className={`${jost.variable} ${cormorant.variable} ${jetbrainsMono.variable}`}>
       <body suppressHydrationWarning className="min-h-screen flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        {/* Cursor-following gold glow — site-wide, self-disables on touch */}
+        <CursorGlow />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

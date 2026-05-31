@@ -1,8 +1,9 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { Menu, X, Zap } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { BRAND } from '@/lib/brand';
 import { cn } from '@/lib/utils';
 
@@ -34,14 +35,18 @@ export const Header = () => {
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2.5 group">
           <span
-            className="logo-shine relative inline-flex items-center justify-center w-9 h-9 rounded-xl gold-gradient transition-transform group-hover:scale-105"
-            style={{
-              border: '1.5px solid rgba(255,255,255,0.55)',
-              boxShadow:
-                '0 6px 18px rgba(184,150,79,0.45), inset 0 1.5px 0 rgba(255,255,255,0.6), inset 0 -1.5px 0 rgba(122,84,0,0.30)',
-            }}
+            className="logo-shine relative inline-flex w-9 h-9 rounded-xl overflow-hidden transition-transform group-hover:scale-105"
+            style={{ boxShadow: '0 6px 18px rgba(184,150,79,0.40)' }}
           >
-            <Zap className="h-5 w-5 text-dark-brown" strokeWidth={2.6} />
+            <Image
+              src="/logo.png"
+              alt={`${BRAND.name} logo`}
+              width={36}
+              height={36}
+              priority
+              unoptimized
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
           </span>
           <span className="font-display text-xl font-black text-dark-brown" style={{ letterSpacing: '-0.02em' }}>
             {BRAND.name}

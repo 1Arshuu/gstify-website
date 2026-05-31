@@ -2,18 +2,17 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * Soft gold orb that trails the cursor across the whole page. It interpolates
- * its position toward the pointer every frame (requestAnimationFrame) so it
- * lags slightly, and uses mix-blend-mode:multiply to add warmth over content.
+ * Soft gold orb that trails the cursor. It interpolates toward the pointer every
+ * frame (requestAnimationFrame) so it lags slightly.
  *
- * It is position:fixed + pointer-events:none, and disables itself entirely on
- * touch devices and when the user prefers reduced motion (item 5).
+ * The element is rendered identically on server and client (so there's no
+ * hydration mismatch), but the animation only wires up on mouse-capable,
+ * motion-allowed devices. On touch/reduced-motion it stays an inert, invisible,
+ * un-styled (no filter, no blend, no transform) fixed div — which the browser
+ * never promotes to a compositing layer, so it has no effect on mobile.
  *
- * `suppressHydrationWarning` is intentional: this fixed-position node is a
- * common target for browser extensions that inject attributes (e.g. datasq*,
- * style.top) before React hydrates. We render an identical empty <div> on
- * server and client, so suppressing the extension-caused attribute mismatch
- * here is safe — the only thing this component ever writes is `transform`.
+ * `suppressHydrationWarning` guards against browser extensions that inject
+ * attributes onto fixed elements before React hydrates.
  */
 export const CursorGlow = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -21,8 +20,6 @@ export const CursorGlow = () => {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-
-    // Skip on touch devices and when reduced motion is requested.
     if (window.matchMedia('(pointer: coarse)').matches) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -38,12 +35,11 @@ export const CursorGlow = () => {
       tgtY = e.clientY;
       if (!visible) {
         visible = true;
-        el.style.opacity = '0.4';
+        el.style.opacity = '0.5';
       }
     };
 
     const tick = () => {
-      // Slow-trailing interpolation toward the pointer.
       curX += (tgtX - curX) * 0.12;
       curY += (tgtY - curY) * 0.12;
       el.style.transform = `translate3d(${curX}px, ${curY}px, 0) translate(-50%, -50%)`;

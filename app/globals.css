@@ -42,6 +42,21 @@
 @keyframes pulse-soft   { 0%,100% { opacity: 0.55; } 50% { opacity: 0.85; } }
 @keyframes gradient-shift { 0%,100% { background-position: 0% center; } 50% { background-position: 100% center; } }
 @keyframes shine        { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes marquee      { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+
+/* Marquee strip (components/Marquee.tsx). Global so it animates on every browser. */
+.marquee-track {
+  animation: marquee var(--marquee-duration, 10s) linear infinite;
+  will-change: transform;
+}
+/* A little slower on phones only (the inline style sets the var; this longhand
+   override wins on small screens without touching the desktop duration). */
+@media (max-width: 640px) {
+  .marquee-track { animation-duration: 24s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
 
 /* Hero invoice mockup — gentle continuous 3D rotation (item 5) */
 @keyframes invoice-spin { 0%, 100% { transform: rotateY(-8deg); } 50% { transform: rotateY(8deg); } }
@@ -272,21 +287,24 @@ body {
 /* 3D TILT — cursor-driven card tilt + parallax-floating icon (item 5)      */
 /* ──────────────────────────────────────────────────────────────────────── */
 
-/* Put this on the grid that wraps cards so children rotate in real depth. */
-.grid-3d { perspective: 1000px; }
+/* Marker class for card grids (no styles needed — the card supplies its own
+   perspective inside the inline transform from SpotlightCard, so we DON'T put a
+   persistent `perspective`/3D context on the grid: that would force a composited
+   layer the browser can drop on memory-constrained phones). */
 
-/* Card receives an inline `transform: rotateX()/rotateY()` from SpotlightCard.
-   The transition makes it trail the cursor smoothly. */
+/* Card receives an inline `transform: rotateX()/rotateY()` from SpotlightCard
+   ONLY while the cursor is over it; at rest there's no transform and no layer.
+   We deliberately avoid an always-on `transform-style: preserve-3d` here for the
+   same reason — persistent 3D contexts on every card overflow the layer budget
+   and make card content blank out until a repaint. */
 .tilt-3d {
-  transform-style: preserve-3d;
   transition: transform 0.4s ease, box-shadow 0.25s ease;
 }
 
-/* Parallax-lifted icon tile — self-perspective translateZ so it floats above
-   the card surface on hover (works even inside an overflow-hidden card). */
+/* Parallax-lifted icon tile — floats toward the viewer on hover via its own
+   perspective. No base transform, so it isn't promoted to a layer at rest. */
 .tilt-layer {
   transition: transform 0.4s ease, box-shadow 0.4s ease;
-  transform: perspective(600px) translateZ(0);
 }
 .tilt-3d:hover .tilt-layer {
   transform: perspective(600px) translateZ(34px);
@@ -303,16 +321,15 @@ body {
 .cursor-glow {
   position: fixed;
   top: 0; left: 0;
-  width: 22px; height: 22px;
+  width: 26px; height: 26px;
   border-radius: 999px;
   pointer-events: none;
   z-index: 60;
   opacity: 0;
-  background: radial-gradient(circle, rgba(232,201,122,0.9), rgba(184,150,79,0.5) 45%, transparent 70%);
-  mix-blend-mode: multiply;
-  filter: blur(2px);
+  /* Soft edges come from the gradient itself — no `filter`/`will-change`, so an
+     idle (mobile) orb is never promoted to a compositing layer. */
+  background: radial-gradient(circle, rgba(232,201,122,0.8), rgba(184,150,79,0.4) 40%, transparent 72%);
   transition: opacity 0.4s ease;
-  will-change: transform;
 }
 
 .sparkle {
@@ -334,27 +351,20 @@ body {
 
 .cta-cream {
   position: relative;
+  /* Real 2px gold border via padding-box/border-box layers — uniformly gold on
+     all four edges and never clipped by overflow:hidden (unlike a masked ring). */
   background:
-    radial-gradient(ellipse at top left,     rgba(232,201,122,0.40), transparent 55%),
-    radial-gradient(ellipse at bottom right,  rgba(184,150,79,0.28), transparent 55%),
-    linear-gradient(135deg, #FFFFFF 0%, #FBF8F2 55%, #F5EDD8 100%);
+    radial-gradient(ellipse at top left,     rgba(232,201,122,0.40), transparent 55%) padding-box,
+    radial-gradient(ellipse at bottom right,  rgba(184,150,79,0.28), transparent 55%) padding-box,
+    linear-gradient(135deg, #FFFFFF 0%, #FBF8F2 55%, #F5EDD8 100%) padding-box,
+    linear-gradient(180deg, #E8C97A 0%, #C9A55A 55%, #B8964F 100%) border-box;
+  border: 2px solid transparent;
   border-radius: 28px;
   overflow: hidden;
   box-shadow:
     inset 0 1.5px 0 rgba(255,255,255,1),
     0 2px 4px rgba(44,24,16,0.06),
     0 30px 64px -24px rgba(44,24,16,0.22);
-}
-/* Graduated gold edge */
-.cta-cream::before {
-  content: '';
-  position: absolute; inset: 0; padding: 1.5px; border-radius: inherit;
-  background: linear-gradient(180deg, rgba(232,201,122,0.95), rgba(184,150,79,0.45) 55%, rgba(122,84,0,0.55));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events: none;
-  z-index: 3;
 }
 .cta-aurora {
   content: '';
@@ -385,6 +395,7 @@ body {
   content: ''; position: absolute; inset: 0; padding: 1.5px; border-radius: inherit;
   background: linear-gradient(135deg, rgba(232,201,122,0.85), rgba(184,150,79,0.3), rgba(232,201,122,0.85));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
   pointer-events: none;
@@ -498,7 +509,10 @@ body {
 /* ──────────────────────────────────────────────────────────────────────── */
 
 .header-melt {
-  position: relative;
+  /* NOTE: no `position` here on purpose — the element carries Tailwind's
+     `sticky` utility, and an unlayered `position: relative` would override it
+     (unlayered CSS outranks utility-layer classes), un-sticking the header.
+     `position: sticky` is itself a positioning context for ::before. */
   background: linear-gradient(180deg,
     rgba(255, 252, 245, 0.82) 0%,
     rgba(251, 248, 242, 0.70) 60%,
@@ -543,14 +557,21 @@ body {
   content: '';
   position: absolute; inset: 0;
   background: linear-gradient(110deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.55) 50%,
-    transparent 70%);
+    transparent 38%,
+    rgba(255, 255, 255, 0.32) 50%,
+    transparent 62%);
   background-size: 250% 100%;
-  background-position: -200% 0;
-  animation: shine 3.4s linear infinite 1s;
+  background-position: -160% 0;
+  background-repeat: no-repeat;  /* single band — no tiled 2nd line */
+  /* One smooth sweep, then a ~5s gap before the next. */
+  animation: logo-sheen 6.5s ease-in-out infinite 1.5s;
   pointer-events: none;
   border-radius: inherit;
+}
+@keyframes logo-sheen {
+  0%   { background-position: -160% 0; }
+  18%  { background-position: 160% 0; }
+  100% { background-position: 160% 0; }
 }
 
 /* Nav hover underline */
@@ -568,10 +589,17 @@ body {
 }
 .nav-underline:hover::after { transform: scaleX(1); }
 
-/* Footer active-link gold underline accent (item 4) */
+/* Footer active-link gold underline accent (item 4).
+   NOTE: `position: relative` is scoped to the ACTIVE link only. Making every
+   footer link positioned promoted each to its own paint record, and on
+   memory-pressured phones those layers get dropped (links blank out until a
+   tap forces a repaint). Static-positioned links paint into the main layer and
+   never disappear; only the single active link needs a positioning context. */
 .footer-link {
-  position: relative;
   transition: color 0.2s ease;
+}
+.footer-link.is-active {
+  position: relative;
 }
 .footer-link.is-active::after {
   content: '';

@@ -136,9 +136,9 @@ export const AppMockup = () => {
             </div>
             <div className="space-y-2">
               {[
-                { c: 'Sharma Textiles',  inv: 'INV-2079', amt: '₹ 18,450', state: 'paid'    },
-                { c: 'Patel Hardware',   inv: 'INV-2078', amt: '₹ 9,210',  state: 'pending' },
-                { c: 'Mehta & Sons',     inv: 'INV-2077', amt: '₹ 32,800', state: 'paid'    },
+                { c: 'Sharma Textiles',  inv: 'INV-209', amt: '₹ 18,450', state: 'paid'    },
+                { c: 'Patel Hardware',   inv: 'INV-208', amt: '₹ 9,210',  state: 'pending' },
+                { c: 'Mehta & Sons',     inv: 'INV-207', amt: '₹ 32,800', state: 'paid'    },
               ].map((r) => (
                 <div key={r.inv} className="rounded-xl p-2.5 flex items-center justify-between"
                      style={{

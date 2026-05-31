@@ -57,14 +57,15 @@ export const Reveal = ({
     return () => io.disconnect();
   }, []);
 
-  // Both states use the same transform function list so the tilt interpolates
-  // smoothly (perspective → rotateX → translate3d), settling at identity.
+  // Hidden state tilts/rises in 3D; the revealed state settles to `none` so we
+  // DON'T leave a permanent compositing layer on every card (lingering
+  // perspective/translate3d layers overflow the browser's layer budget and make
+  // cards randomly blank out). `none` interpolates from the 3D matrix smoothly.
   const hidden = `perspective(1000px) rotateX(${rotate}deg) translate3d(0,${y}px,0)`;
-  const here   = 'perspective(1000px) rotateX(0deg) translate3d(0,0,0)';
 
   const style: CSSProperties = {
     opacity:    shown ? 1 : 0,
-    transform:  shown ? here : hidden,
+    transform:  shown ? 'none' : hidden,
     transformOrigin: 'center bottom',
     transition: `opacity ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`,
     willChange: shown ? 'auto' : 'opacity, transform',

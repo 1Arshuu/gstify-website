@@ -1,12 +1,18 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Zap, Mail } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Mail } from 'lucide-react';
 import { BRAND } from '@/lib/brand';
 import { cn } from '@/lib/utils';
 
 export const Footer = () => {
-  const year = new Date().getFullYear();
+  // Read the year on the client only — calling new Date() during prerender is
+  // disallowed under Cache Components (it would make the static shell dynamic).
+  // The default matches the build year, so there's no visible change on mount.
+  const [year, setYear] = useState(2026);
+  useEffect(() => setYear(new Date().getFullYear()), []);
   const pathname = usePathname();
 
   const isActive = (href: string) =>
@@ -40,8 +46,15 @@ export const Footer = () => {
           {/* Brand */}
           <div className="col-span-2">
             <Link href="/" className="inline-flex items-center gap-2.5">
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl gold-gradient">
-                <Zap className="h-4 w-4 text-dark-brown" strokeWidth={2.6} />
+              <span className="inline-flex w-8 h-8 rounded-xl overflow-hidden">
+                <Image
+                  src="/logo.png"
+                  alt={`${BRAND.name} logo`}
+                  width={32}
+                  height={32}
+                  unoptimized
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
               </span>
               <span className="font-display text-lg font-black text-dark-brown tracking-tight">
                 {BRAND.name}

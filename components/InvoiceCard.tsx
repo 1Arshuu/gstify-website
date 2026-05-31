@@ -59,7 +59,7 @@ export const InvoiceCard = () => {
                 className="text-[10px] font-semibold text-[#6B6B6B] mt-0.5"
                 style={{ fontFamily: 'var(--font-jost), sans-serif' }}
               >
-                GSTIN 09XXXXXX1A1Z2
+                GSTIN 07XXXXXX1A1AA
               </p>
             </div>
             <div className="text-right">
@@ -73,7 +73,7 @@ export const InvoiceCard = () => {
                 className="text-sm font-extrabold text-[#1E0F00] mt-0.5"
                 style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', letterSpacing: '0.02em' }}
               >
-                INV-2079
+                INV-207
               </p>
               <p
                 className="text-[10px] font-semibold text-[#6B6B6B] mt-0.5"

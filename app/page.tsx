@@ -1,11 +1,12 @@
 'use client';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import {
   Sparkles as SparklesIcon, ArrowRight, Download, ShieldCheck,
   CloudUpload, Receipt, Calculator, Globe, Banknote,
-  Smartphone, Lock, Layers, Star, Search,
+  Smartphone, Lock, Layers, Star,
 } from 'lucide-react';
 import { BRAND } from '@/lib/brand';
 import { Reveal } from '@/components/Reveal';
@@ -15,7 +16,9 @@ import { SectionHeading } from '@/components/SectionHeading';
 import { SpotlightCard } from '@/components/SpotlightCard';
 import { InvoiceCard } from '@/components/InvoiceCard';
 import { Sparkles } from '@/components/Sparkles';
-import { CursorGlow } from '@/components/CursorGlow';
+
+// SMOKE TEST (revertible): desktop-only golden WebGL smoke in the hero.
+const HeroParticles = dynamic(() => import('@/components/HeroParticles'), { ssr: false });
 
 const marqueeItems = [
   'Tax Invoice', '·', 'Delivery Challan', '·', 'E-Way Bill', '·',
@@ -49,21 +52,24 @@ export default function Home() {
 
   return (
     <div>
-      {/* Cursor-following gold glow — site-wide, self-disables on touch */}
-      <CursorGlow />
-
       {/* ════════════════════════ HERO ════════════════════════ */}
-      <section className="hero-bg noise-overlay relative overflow-x-clip">
-        {/* Ambient gold orbs (parallax targets) */}
-        <div ref={orb1} aria-hidden className="absolute -top-40 -left-32 w-[520px] h-[520px] rounded-full pointer-events-none opacity-55 will-change-transform"
+      {/* SMOKE TEST: hero-bg → surface (gold gradient removed); golden smoke
+          provides the gold on desktop, orbs keep it on mobile. Revert: restore
+          `hero-bg`, drop the `lg:hidden` on the orbs, and remove <HeroParticles/>. */}
+      <section className="surface noise-overlay relative overflow-x-clip">
+        {/* Desktop-only golden smoke (renders nothing on touch/mobile) */}
+        <HeroParticles />
+
+        {/* Ambient gold orbs (parallax targets) — mobile only now */}
+        <div ref={orb1} aria-hidden className="lg:hidden absolute -top-40 -left-32 w-[520px] h-[520px] rounded-full pointer-events-none opacity-55 will-change-transform"
              style={{ background: 'radial-gradient(circle, rgba(232,201,122,0.55), transparent 70%)', filter: 'blur(80px)' }} />
-        <div ref={orb2} aria-hidden className="absolute top-1/2 -right-32 w-[480px] h-[480px] rounded-full pointer-events-none opacity-45 will-change-transform"
+        <div ref={orb2} aria-hidden className="lg:hidden absolute top-1/2 -right-32 w-[480px] h-[480px] rounded-full pointer-events-none opacity-45 will-change-transform"
              style={{ background: 'radial-gradient(circle, rgba(184,150,79,0.40), transparent 70%)', filter: 'blur(80px)' }} />
 
         {/* Magical floating sparkles */}
         <Sparkles />
 
-        <div className="container mx-auto px-4 sm:px-6 max-w-6xl pt-14 sm:pt-20 lg:pt-28 pb-14 sm:pb-20 relative">
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl pt-14 sm:pt-20 lg:pt-28 pb-14 sm:pb-20 relative z-10">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
             {/* ━━━ Left — copy ━━━ */}
@@ -168,7 +174,7 @@ export default function Home() {
         <div className="relative">
           <div className="divider-hairline mx-auto max-w-6xl" />
           <div className="py-3">
-            <Marquee speed={10}>
+            <Marquee speed={14}>
               {marqueeItems.map((item, i) => (
                 <span key={i}
                       className={`text-sm font-extrabold uppercase ${item === '·' ? 'text-[#B8964F]/40' : 'text-[#7A5E2A]'}`}

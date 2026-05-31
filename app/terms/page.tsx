@@ -1,6 +1,10 @@
 import { BRAND } from '@/lib/brand';
 
-export const metadata = { title: 'Terms of Service' };
+export const metadata = {
+  title: 'Terms of Service',
+  description: `Terms of Service for ${BRAND.name} — the GST billing app for Indian small businesses.`,
+  alternates: { canonical: '/terms' },
+};
 
 export default function Terms() {
   return (

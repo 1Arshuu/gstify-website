@@ -1,6 +1,10 @@
 import { BRAND } from '@/lib/brand';
 
-export const metadata = { title: 'Privacy Policy' };
+export const metadata = {
+  title: 'Privacy Policy',
+  description: `How ${BRAND.name} handles your data — privacy policy for the GST billing app for Indian SMBs.`,
+  alternates: { canonical: '/privacy-policy' },
+};
 
 export default function PrivacyPolicy() {
   return (
