@@ -51,7 +51,7 @@ export default async function OpengraphImage() {
         </div>
 
         <div style={{ display: 'flex', fontSize: '32px', color: '#6B6B6B', marginTop: '28px', maxWidth: '900px' }}>
-          GST invoices, e-way bills & quotations on Android — offline-first, free to start.
+          GST invoices, delivery challans & quotations on Android — offline-first, free to start.
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '46px' }}>

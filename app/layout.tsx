@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     template: `%s · ${BRAND.name}`,
   },
   description:
-    'Create GST invoices, e-way bills, delivery challans and quotations in seconds. ' +
+    'Create GST invoices, delivery challans, quotations and POS bills in seconds. ' +
     'Track payments, auto-backup to Google Drive, works offline. Built for Indian SMBs.',
   keywords: [
     'GST billing app',
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     'India GST',
     'small business billing',
     'invoice app India',
-    'e-way bill app',
+    'POS billing app',
     'delivery challan',
     'GSTR',
     'free GST app',
@@ -112,7 +112,7 @@ const jsonLd = {
       operatingSystem: 'Android',
       applicationCategory: 'BusinessApplication',
       description:
-        'Create GST invoices, e-way bills, delivery challans and quotations in seconds. ' +
+        'Create GST invoices, delivery challans, quotations and POS bills in seconds. ' +
         'Track payments, auto-backup to Google Drive, works offline.',
       url: BRAND.url,
       downloadUrl: BRAND.playStoreUrl,

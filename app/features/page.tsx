@@ -2,12 +2,13 @@
 import {
   Receipt, Calculator, CloudUpload, Globe, FileText, Banknote,
   Smartphone, Lock, Users, Package, BarChart3, FileSignature,
+  Repeat, Wallet, FileMinus, Scale, FileSpreadsheet,
 } from 'lucide-react';
 import { Reveal } from '@/components/Reveal';
 import { SectionHeading } from '@/components/SectionHeading';
 
 const features = [
-  { icon: Receipt,      title: '6 Document Types',         body: 'Tax Invoice, Delivery Challan, E-Way Bill, Proforma, Quotation, POS Bill — each with its own number sequence.' },
+  { icon: Receipt,      title: '5 Document Types',         body: 'Tax Invoice, Delivery Challan, Proforma, Quotation, POS Bill — each with its own number sequence.' },
   { icon: Calculator,   title: 'Per-Line GST Rates',       body: 'Mix products at 5%, 12%, 18%, 28% in one invoice. CGST/SGST or IGST is decided automatically.' },
   { icon: FileText,     title: '5 Premium PDF Templates',  body: 'Classic Gold, Modern Midnight, Corporate Sapphire, Elegant Rose, Compact Emerald.' },
   { icon: CloudUpload,  title: 'Google Drive Backup',      body: 'One-tap auto-sync to your own Drive (appData scope — only GSTify can read it). Restore in seconds.' },
@@ -16,6 +17,11 @@ const features = [
   { icon: Users,        title: 'Outstanding Balance',      body: 'Live per-customer running balance. Excludes estimates (proforma/quotation) and counter sales (POS).' },
   { icon: Package,      title: 'Product Catalog',          body: 'Save top sellers with HSN, rate, unit. Add to an invoice with one tap.' },
   { icon: BarChart3,    title: 'GST Reports',              body: 'Monthly sales, GST split (CGST/SGST/IGST), top customers — exportable as PDF.' },
+  { icon: FileSpreadsheet, title: 'GSTR-Ready Exports',    body: 'Export GSTR-1, GSTR-2, GSTR-3B and GSTR-9 data as CSV — ready to file with your return.' },
+  { icon: Repeat,       title: 'Recurring Invoices',       body: 'Set a weekly, monthly, quarterly or yearly schedule and GSTify auto-generates each invoice for you. (Pro)' },
+  { icon: Wallet,       title: 'Expense Tracking',         body: 'Log business costs by category with GST and vendor details — keep spending and input credit in one place.' },
+  { icon: FileMinus,    title: 'Credit Notes',             body: 'Issue a credit note against any invoice with partial returns, a reason, and optional stock restock.' },
+  { icon: Scale,        title: 'Balance Sheet',            body: 'A live snapshot of assets, liabilities and equity — derived straight from your invoices, payments and stock.' },
   { icon: FileSignature, title: 'Signature + Branding',    body: 'Upload your logo and signature once. They appear on every invoice automatically.' },
   { icon: Smartphone,   title: 'Built for Mobile',         body: 'Designed Android-first. Smooth animations, gesture-friendly, premium typography.' },
   { icon: Lock,         title: 'Biometric Lock',           body: 'Optional fingerprint / face unlock at launch. Your invoice data stays locked when your phone is.' },

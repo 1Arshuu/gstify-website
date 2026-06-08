@@ -34,7 +34,7 @@ export default function PrivacyPolicy() {
         <ul>
           <li>Company profile (name, GSTIN, address, contact details).</li>
           <li>Customers (names, GSTINs, billing addresses).</li>
-          <li>Invoices, delivery challans, e-way bills, quotations, proformas, POS bills.</li>
+          <li>Invoices, delivery challans, quotations, proformas, POS bills.</li>
           <li>Payments recorded against customers / invoices.</li>
           <li>Products in your catalog.</li>
         </ul>

@@ -6,7 +6,7 @@ import { BRAND } from '@/lib/brand';
 const faq = [
   {
     q: 'Is GSTify free?',
-    a: 'Yes. Free tier includes 50 invoices/month, 100 customers, 30 products, and 1 device. Upgrade to Pro (₹199/mo) for unlimited everything and the GSTify watermark removed.',
+    a: 'Yes. Free tier includes 50 invoices/month, 50 customers, 30 products, and 1 device. Upgrade to Pro (₹199/mo) for unlimited everything and the GSTify watermark removed.',
   },
   {
     q: 'Does it work offline?',
@@ -15,6 +15,10 @@ const faq = [
   {
     q: 'How does backup work?',
     a: 'Connect Google Drive once. The app stores backup snapshots in your own Drive\'s appData folder (only GSTify can access them). Restore on any device with one tap.',
+  },
+  {
+    q: 'Free users: please connect Google Drive',
+    a: 'On the Free plan your data is stored locally on your device. If you uninstall the app, lose your phone, or clear app data, that data cannot be recovered unless you have connected Google Drive backup. We strongly recommend connecting Drive right after your first invoice. GSTify is not responsible for any data loss where Drive backup was not enabled.',
   },
   {
     q: 'Is my data secure?',

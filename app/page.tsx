@@ -21,8 +21,8 @@ import { Sparkles } from '@/components/Sparkles';
 const HeroParticles = dynamic(() => import('@/components/HeroParticles'), { ssr: false });
 
 const marqueeItems = [
-  'Tax Invoice', '·', 'Delivery Challan', '·', 'E-Way Bill', '·',
-  'Proforma', '·', 'Quotation', '·', 'POS Bill', '·',
+  'Tax Invoice', '·', 'Delivery Challan', '·', 'Proforma', '·',
+  'Quotation', '·', 'POS Bill', '·',
   '5 PDF Templates', '·', 'Offline-First', '·', 'Drive Backup', '·',
 ];
 
@@ -99,7 +99,7 @@ export default function Home() {
 
               <p className="mt-6 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0"
                  style={{ color: '#6B6B6B' }}>
-                The fastest way to bill on Android — six document types from Tax Invoice
+                The fastest way to bill on Android — five document types from Tax Invoice
                 to POS, GST-ready PDFs, smart payment tracking, and Drive backup. All on
                 your phone, all offline.
               </p>
@@ -197,7 +197,7 @@ export default function Home() {
           <SectionHeading
             eyebrow="Everything you need"
             title={<>One app. <span className="gradient-text italic">Every kind of bill.</span></>}
-            body="From a quick POS receipt to a multi-page tax invoice with e-way details — GSTify covers every document an Indian SMB issues."
+            body="From a quick POS receipt to a multi-page GST tax invoice — GSTify covers every document an Indian SMB issues."
           />
 
           {/* Bento — auto-flow on mobile, structured on desktop. grid-3d adds the
@@ -216,14 +216,14 @@ export default function Home() {
                 <IconTile><Receipt className="h-6 w-6 text-dark-brown" strokeWidth={2.4} /></IconTile>
                 <h3 className="font-display text-2xl lg:text-3xl font-black text-dark-brown mt-5"
                     style={{ letterSpacing: '-0.025em' }}>
-                  6 document types
+                  5 document types
                 </h3>
                 <p className="mt-3 text-[15px] leading-relaxed max-w-md"
                    style={{ color: '#6B6B6B', fontFamily: 'var(--font-jost), sans-serif' }}>
-                  Tax Invoice, Delivery Challan, E-Way Bill, Proforma, Quotation, and POS Cash Memo — all share the same fast UI.
+                  Tax Invoice, Delivery Challan, Proforma, Quotation, and POS Cash Memo — all share the same fast UI.
                 </p>
                 <div className="flex flex-wrap gap-2 mt-5 md:mt-auto md:pt-5">
-                  {['INV', 'CHL', 'EWB', 'PRO', 'QTN', 'POS'].map((p) => (
+                  {['INV', 'CHL', 'PRO', 'QTN', 'POS'].map((p) => (
                     <span key={p} className="chip">{p}</span>
                   ))}
                 </div>
@@ -256,6 +256,7 @@ export default function Home() {
                 <p className="mt-2 text-[14px] leading-relaxed"
                    style={{ color: '#6B6B6B', fontFamily: 'var(--font-jost), sans-serif' }}>
                   Auto-syncs to <em>your</em> Drive on appData scope. Restore in seconds.
+                  Free-plan data lives on-device — connect Drive to keep it safe.
                 </p>
               </SpotlightCard>
             </Reveal>
@@ -344,7 +345,7 @@ export default function Home() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5 grid-3d">
             {[
-              { value: 6,   suffix: '',    label: 'Document Types',  hint: 'Invoice → POS' },
+              { value: 5,   suffix: '',    label: 'Document Types',  hint: 'Invoice → POS' },
               { value: 5,   suffix: '',    label: 'PDF Templates',   hint: 'Switch any time' },
               { value: 50,  suffix: '/mo', label: 'Free Invoices',   hint: 'No card needed' },
               { value: 100, suffix: '%',   label: 'Offline-Ready',   hint: 'Sync on reconnect' },

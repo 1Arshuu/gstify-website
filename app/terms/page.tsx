@@ -16,14 +16,14 @@ export default function Terms() {
         <h1 className="font-display text-4xl font-black text-dark-brown mb-2" style={{ letterSpacing: '-0.03em' }}>
           Terms of Service
         </h1>
-        <p className="text-sm text-gold-dim">Last updated: 30 May 2026</p>
+        <p className="text-sm text-gold-dim">Last updated: 9 June 2026</p>
 
         <p>
           By installing and using {BRAND.name} (the &quot;App&quot;) or by visiting <a href={BRAND.url}>{BRAND.domain}</a>, you agree to these Terms. If you do not agree, please uninstall the App and stop using the website.
         </p>
 
         <h2>1. The Service</h2>
-        <p>{BRAND.name} is a mobile application for creating GST-compliant invoices, delivery challans, e-way bills, proforma invoices, quotations, and POS bills, and for tracking customers and payments. The App is provided &quot;as is&quot;.</p>
+        <p>{BRAND.name} is a mobile application for creating GST-compliant invoices, delivery challans, proforma invoices, quotations, and POS bills, and for tracking customers and payments. The App is provided &quot;as is&quot;.</p>
 
         <h2>2. Accounts</h2>
         <ul>
@@ -34,7 +34,7 @@ export default function Terms() {
 
         <h2>3. Plans and payment</h2>
         <ul>
-          <li><strong>Free plan</strong>: includes 50 invoices/month, 100 customers, 30 products, 1 device. The App adds a small &quot;Generated with GSTify&quot; watermark to free-plan invoice PDFs.</li>
+          <li><strong>Free plan</strong>: includes 50 invoices/month, 50 customers, 30 products, 1 device. The App adds a small &quot;Generated with GSTify&quot; watermark to free-plan invoice PDFs.</li>
           <li><strong>Pro</strong> (₹199/month or ₹1,499/year): unlimited invoices, customers, products; 3 devices; no watermark; GST auto-fetch by GSTIN; all premium templates.</li>
           <li><strong>Business</strong> (₹399/month or ₹2,999/year): everything in Pro, plus up to 5 devices and PC/web login.</li>
           <li>Subscriptions are billed by Google Play and renew automatically until cancelled. Cancel any time from Google Play → Subscriptions.</li>

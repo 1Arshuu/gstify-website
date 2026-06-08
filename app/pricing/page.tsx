@@ -1,5 +1,5 @@
 'use client';
-import { Check, X, Download, Crown, Briefcase, Sparkles } from 'lucide-react';
+import { Check, X, Download, Crown, Briefcase, Sparkles, CloudUpload, AlertTriangle } from 'lucide-react';
 import { BRAND } from '@/lib/brand';
 import { Reveal } from '@/components/Reveal';
 import { SectionHeading } from '@/components/SectionHeading';
@@ -12,7 +12,7 @@ const plans = [
     cta: 'Start Free', highlight: false,
     features: [
       { text: '50 invoices / month',         on: true  },
-      { text: '100 customers',               on: true  },
+      { text: '50 customers',                on: true  },
       { text: '30 saved products',           on: true  },
       { text: '1 device',                    on: true  },
       { text: 'GSTify watermark on PDFs',    on: true  },
@@ -111,7 +111,33 @@ export default function Pricing() {
           ))}
         </div>
 
-        <p className="text-center text-xs text-gold-dim mt-12 max-w-xl mx-auto leading-relaxed">
+        {/* Free-plan backup disclaimer — clearly urge Drive backup */}
+        <Reveal className="mt-12 max-w-3xl mx-auto">
+          <div className="rounded-2xl p-5 sm:p-6 flex items-start gap-4"
+               style={{
+                 background: 'linear-gradient(135deg, rgba(234,179,8,0.10), rgba(234,179,8,0.04))',
+                 border: '1.5px solid rgba(234,179,8,0.34)',
+               }}>
+            <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl flex-shrink-0"
+                  style={{ background: 'linear-gradient(135deg,#E8C97A,#C9A55A,#B8964F)', boxShadow: '0 4px 12px rgba(184,150,79,0.35)' }}>
+              <CloudUpload className="h-5 w-5 text-dark-brown" strokeWidth={2.4} />
+            </span>
+            <div>
+              <p className="font-display text-lg font-extrabold text-dark-brown flex items-center gap-2" style={{ letterSpacing: '-0.02em' }}>
+                <AlertTriangle className="h-4 w-4 text-amber-600" strokeWidth={2.6} />
+                Free users: connect Google Drive
+              </p>
+              <p className="mt-1.5 text-[14px] leading-relaxed" style={{ color: '#6B6B6B' }}>
+                On the Free plan your data is stored locally on your device. If the app is uninstalled,
+                the device is lost, or app data is cleared, that data <strong>cannot be recovered</strong> unless
+                you have connected Google Drive backup. We strongly recommend connecting Drive right after your
+                first invoice. <strong>GSTify is not responsible for any data loss where Drive backup was not enabled.</strong>
+              </p>
+            </div>
+          </div>
+        </Reveal>
+
+        <p className="text-center text-xs text-gold-dim mt-10 max-w-xl mx-auto leading-relaxed">
           Prices in INR. Pro and Business plans are billed through Google Play. Cancel any time from your Google Play subscriptions.
         </p>
       </section>
