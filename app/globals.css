@@ -6,20 +6,20 @@
 
 @theme {
   /* App-true palette (sampled from src/components/UsageBar, FAB, Cards) */
-  --color-gold:        #B8964F;
-  --color-gold-soft:   #C9A55A;
-  --color-champagne:   #E8C97A;
-  --color-dark-brown:  #1E0F00;
-  --color-cream:       #FBF8F2;
-  --color-cream-warm:  #F5EDD8;
-  --color-gold-dim:    #7A5E2A;
-  --color-ink:         #0E0805;
+  --color-gold:        #A87E1E;
+  --color-gold-soft:   #B98A2E;
+  --color-champagne:   #D7B05F;
+  --color-dark-brown:  #2B2722;
+  --color-cream:       #FFFDF8;
+  --color-cream-warm:  #EFE7D5;
+  --color-gold-dim:    #8A6717;
+  --color-ink:         #2B2722;
   --color-muted:       #6B6B6B;       /* matches app's secondary text */
-  --color-app-surface: #F8F6F3;       /* matches app's page background */
-  --color-app-surface-2: #F5F3F0;     /* paired bottom of the page gradient */
+  --color-app-surface: #F6F2E9;       /* matches app's page background */
+  --color-app-surface-2: #ECE4D4;     /* paired bottom of the page gradient */
 
-  --font-sans:    var(--font-jost), system-ui, sans-serif;
-  --font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
+  --font-sans:    var(--font-poppins), system-ui, sans-serif;
+  --font-display: var(--font-jost), Georgia, "Times New Roman", serif;
   --font-mono:    var(--font-jetbrains-mono), ui-monospace, monospace;
 
   --animate-lux-float:   lux-float   3.2s ease-in-out infinite;
@@ -77,45 +77,77 @@
 :root { color-scheme: light; }
 html  { scroll-behavior: smooth; }
 body {
-  /* App-exact page gradient — same as the app's <Layout> wrapper */
-  background: linear-gradient(135deg, #F8F6F3 0%, #F5F3F0 100%);
-  color: #1E0F00;
+  /* Solid ivory base — the fixed gold-dust galaxy paints over this, and the
+     slightly-translucent section surfaces sit above the galaxy so the dust
+     shimmers through everywhere (app-matched signature effect). */
+  background: #F6F2E9;
+  color: #2B2722;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
-::selection { background: rgba(232,201,122,0.45); color: #1E0F00; }
+::selection { background: rgba(215,176,95,0.45); color: #2B2722; }
+
+/* ── Gold-dust "galaxy" — the Ivory Gold signature background ─────────────── */
+.gm-galaxy {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  overflow: hidden; opacity: 1;
+  background-image:
+    radial-gradient(2.6px 2.6px at 24px 32px,  rgba(150,108,18,0.95), transparent 60%),
+    radial-gradient(2px 2px     at 132px 92px, rgba(184,138,40,0.85), transparent 60%),
+    radial-gradient(1.6px 1.6px at 212px 172px, rgba(150,108,18,0.75), transparent 60%),
+    radial-gradient(3px 3px     at 92px 236px, rgba(196,154,58,0.90), transparent 60%),
+    radial-gradient(2px 2px     at 276px 52px, rgba(150,108,18,0.85), transparent 60%),
+    radial-gradient(1.6px 1.6px at 306px 286px, rgba(184,138,40,0.70), transparent 60%),
+    radial-gradient(2.6px 2.6px at 160px 320px, rgba(196,154,58,0.85), transparent 60%),
+    radial-gradient(2px 2px     at 52px 150px, rgba(150,108,18,0.80), transparent 60%);
+  background-size: 300px 300px;
+  background-repeat: repeat;
+  animation: galaxyDrift 90s linear infinite;
+}
+.gm-galaxy::after {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(55% 40% at 50% 0%,  rgba(184,138,40,0.16) 0%, rgba(184,138,40,0) 70%),
+    radial-gradient(45% 35% at 85% 95%, rgba(196,154,58,0.13) 0%, rgba(196,154,58,0) 70%);
+  animation: galaxyTwinkle 6s ease-in-out infinite;
+}
+@keyframes galaxyDrift   { from { background-position: 0 0; } to { background-position: 480px -680px; } }
+@keyframes galaxyTwinkle { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+
+/* All page content rides above the galaxy. */
+.gm-content { position: relative; z-index: 1; }
 
 /* ──────────────────────────────────────────────────────────────────────── */
-/* SURFACES — App-matched backgrounds                                       */
+/* SURFACES — App-matched backgrounds (translucent so the dust shows)       */
 /* ──────────────────────────────────────────────────────────────────────── */
 
 /* App page surface — used app-wide */
 .surface {
-  background: linear-gradient(135deg, #F8F6F3 0%, #F5F3F0 100%);
+  background: linear-gradient(135deg, rgba(246,242,233,0.84) 0%, rgba(236,228,212,0.84) 100%);
 }
 
 /* Warmer surface — for alternating sections without breaking palette */
 .surface-warm {
-  background: linear-gradient(135deg, #F5F3F0 0%, #F0EBE0 100%);
+  background: linear-gradient(135deg, rgba(236,228,212,0.86) 0%, rgba(231,220,198,0.86) 100%);
 }
 
 /* Hero — soft gold glow over the app surface (still matches palette) */
 .hero-bg {
   background:
-    radial-gradient(ellipse 90% 60% at 30% 0%,    rgba(232,201,122,0.32), transparent 60%),
-    radial-gradient(ellipse 70% 50% at 90% 100%,  rgba(184,150,79,0.22), transparent 60%),
-    linear-gradient(135deg, #F8F6F3 0%, #F5F3F0 100%);
+    radial-gradient(ellipse 90% 60% at 30% 0%,    rgba(215,176,95,0.32), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 90% 100%,  rgba(168,126,30,0.22), transparent 60%),
+    linear-gradient(135deg, rgba(246,242,233,0.84) 0%, rgba(236,228,212,0.84) 100%);
 }
 
 /* CTA banner gradient — warm-rose-gold tint, sister to the app's gold FAB */
 .banner-bg {
   background:
-    radial-gradient(ellipse at top left,    rgba(232,201,122,0.45), transparent 55%),
-    radial-gradient(ellipse at bottom right,rgba(184,150,79,0.35), transparent 55%),
-    linear-gradient(135deg, #FBF8F2 0%, #F5EDD8 100%);
+    radial-gradient(ellipse at top left,    rgba(215,176,95,0.45), transparent 55%),
+    radial-gradient(ellipse at bottom right,rgba(168,126,30,0.35), transparent 55%),
+    linear-gradient(135deg, #FFFDF8 0%, #EFE7D5 100%);
 }
 
 /* ──────────────────────────────────────────────────────────────────────── */
@@ -123,20 +155,20 @@ body {
 /* ──────────────────────────────────────────────────────────────────────── */
 
 .gold-gradient {
-  background: linear-gradient(135deg, #E8C97A 0%, #C9A55A 50%, #B8964F 100%);
+  background: linear-gradient(135deg, #D7B05F 0%, #B98A2E 50%, #A87E1E 100%);
 }
 
 /* Matches the app's primary FAB exactly (Customers.tsx Add Customer FAB) */
 .gold-button {
-  background: linear-gradient(135deg, #E8C97A, #C9A55A, #B8964F);
-  color: #1E0F00;
+  background: linear-gradient(135deg, #D7B05F, #B98A2E, #A87E1E);
+  color: #2B2722;
   border: 1.5px solid rgba(255, 255, 255, 0.55);
   box-shadow:
-    0 10px 28px rgba(44, 24, 16, 0.30),
+    0 10px 28px rgba(43, 39, 34, 0.30),
     inset 0 1.5px 0 rgba(255, 255, 255, 0.6),
-    inset 0 -1.5px 0 rgba(122, 84, 0, 0.30);
+    inset 0 -1.5px 0 rgba(110, 84, 23, 0.30);
   font-weight: 800;
-  font-family: var(--font-jost), sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
   overflow: hidden;
@@ -155,44 +187,44 @@ body {
 .gold-button:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 14px 36px rgba(44, 24, 16, 0.35),
+    0 14px 36px rgba(43, 39, 34, 0.35),
     inset 0 1.5px 0 rgba(255, 255, 255, 0.7),
-    inset 0 -1.5px 0 rgba(122, 84, 0, 0.30);
+    inset 0 -1.5px 0 rgba(110, 84, 23, 0.30);
 }
 .gold-button:hover::after { opacity: 1; animation: shine 1.2s ease forwards; }
 .gold-button:active { transform: scale(0.97); }
 
 /* Subtle outline button (matches the app's secondary buttons) */
 .outline-button {
-  background: linear-gradient(180deg, #FFFFFF, #FBF8F2);
-  color: #1E0F00;
-  border: 1.5px solid rgba(184, 150, 79, 0.32);
+  background: linear-gradient(180deg, #FFFFFF, #FFFDF8);
+  color: #2B2722;
+  border: 1.5px solid rgba(168, 126, 30, 0.32);
   font-weight: 700;
-  font-family: var(--font-jost), sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   box-shadow:
     inset 0 1.5px 0 rgba(255, 255, 255, 1),
-    0 2px 6px rgba(44, 24, 16, 0.06);
+    0 2px 6px rgba(43, 39, 34, 0.06);
   transition: all 0.2s ease;
 }
 .outline-button:hover {
-  border-color: rgba(184, 150, 79, 0.55);
+  border-color: rgba(168, 126, 30, 0.55);
   box-shadow:
     inset 0 1.5px 0 rgba(255, 255, 255, 1),
-    0 6px 16px rgba(184, 150, 79, 0.15);
+    0 6px 16px rgba(168, 126, 30, 0.15);
   transform: translateY(-1px);
 }
 .outline-button:active { transform: scale(0.98); }
 
 /* Dark inverse button — for the final CTA */
 .dark-button {
-  background: linear-gradient(180deg, #2A1A07 0%, #1E0F00 100%);
-  color: #FBF8F2;
-  border: 1.5px solid rgba(232, 201, 122, 0.25);
+  background: linear-gradient(180deg, #3A342C 0%, #2B2722 100%);
+  color: #FFFDF8;
+  border: 1.5px solid rgba(215, 176, 95, 0.25);
   box-shadow:
-    0 10px 28px rgba(14, 8, 5, 0.40),
-    inset 0 1.5px 0 rgba(232, 201, 122, 0.12);
+    0 10px 28px rgba(22, 20, 17, 0.40),
+    inset 0 1.5px 0 rgba(215, 176, 95, 0.12);
   font-weight: 800;
-  font-family: var(--font-jost), sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   transition: transform 0.2s ease;
 }
 .dark-button:hover  { transform: translateY(-2px); }
@@ -207,52 +239,52 @@ body {
 /* Primary card — exactly matches the app's premium card recipe */
 .app-card {
   background:
-    linear-gradient(180deg, #FFFFFF 0%, #FBF8F2 100%) padding-box,
+    linear-gradient(180deg, #FFFFFF 0%, #FFFDF8 100%) padding-box,
     linear-gradient(180deg,
-      rgba(232,201,122,0.95) 0%,
-      rgba(184,150,79,0.55) 55%,
-      rgba(122,84,0,0.60) 100%) border-box;
+      rgba(215,176,95,0.95) 0%,
+      rgba(168,126,30,0.55) 55%,
+      rgba(110,84,23,0.60) 100%) border-box;
   border: 1.5px solid transparent;
   box-shadow:
     inset 0 1.5px 0 rgba(255, 255, 255, 1),
-    inset 0 -1.5px 0 rgba(184, 150, 79, 0.14),
-    0 2px 4px rgba(44, 24, 16, 0.06),
-    0 14px 32px -8px rgba(44, 24, 16, 0.12);
+    inset 0 -1.5px 0 rgba(168, 126, 30, 0.14),
+    0 2px 4px rgba(43, 39, 34, 0.06),
+    0 14px 32px -8px rgba(43, 39, 34, 0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .app-card-hover:hover {
   /* Card visibly "rises": shadow y-offset 14px → 24px and the spread softens */
   box-shadow:
     inset 0 1.5px 0 rgba(255, 255, 255, 1),
-    inset 0 -1.5px 0 rgba(184, 150, 79, 0.14),
-    0 2px 4px rgba(44, 24, 16, 0.06),
-    0 24px 50px -12px rgba(44, 24, 16, 0.20),
-    0 0 0 1px rgba(184, 150, 79, 0.18);
+    inset 0 -1.5px 0 rgba(168, 126, 30, 0.14),
+    0 2px 4px rgba(43, 39, 34, 0.06),
+    0 24px 50px -12px rgba(43, 39, 34, 0.20),
+    0 0 0 1px rgba(168, 126, 30, 0.18);
 }
 
 /* Lifted card — extra dramatic shadow for hero/CTA tiles */
 .lux-card {
   background:
-    linear-gradient(180deg, #FFFFFF 0%, #FBF8F2 100%) padding-box,
+    linear-gradient(180deg, #FFFFFF 0%, #FFFDF8 100%) padding-box,
     linear-gradient(180deg,
-      rgba(232,201,122,0.95) 0%,
-      rgba(184,150,79,0.55) 55%,
-      rgba(122,84,0,0.60) 100%) border-box;
+      rgba(215,176,95,0.95) 0%,
+      rgba(168,126,30,0.55) 55%,
+      rgba(110,84,23,0.60) 100%) border-box;
   border: 1.5px solid transparent;
   box-shadow:
     inset 0 1.5px 0 rgba(255, 255, 255, 1),
-    inset 0 -1.5px 0 rgba(184, 150, 79, 0.14),
-    0 2px 4px rgba(44, 24, 16, 0.06),
-    0 14px 32px -8px rgba(44, 24, 16, 0.12),
-    0 28px 60px -20px rgba(44, 24, 16, 0.22);
+    inset 0 -1.5px 0 rgba(168, 126, 30, 0.14),
+    0 2px 4px rgba(43, 39, 34, 0.06),
+    0 14px 32px -8px rgba(43, 39, 34, 0.12),
+    0 28px 60px -20px rgba(43, 39, 34, 0.22);
 }
 
 .lux-card-soft {
-  background: linear-gradient(180deg, #FFFFFF 0%, #FBF8F2 100%);
-  border: 1px solid rgba(184, 150, 79, 0.18);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFFDF8 100%);
+  border: 1px solid rgba(168, 126, 30, 0.18);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 1),
-    0 4px 14px -4px rgba(44, 24, 16, 0.08);
+    0 4px 14px -4px rgba(43, 39, 34, 0.08);
 }
 
 /* Spotlight wrapper — pairs with SpotlightCard.tsx cursor follower.
@@ -270,7 +302,7 @@ body {
     position: absolute; inset: 0; pointer-events: none;
     background: radial-gradient(
       420px circle at var(--mx, 50%) var(--my, 50%),
-      rgba(232, 201, 122, 0.18),
+      rgba(215, 176, 95, 0.18),
       transparent 50%
     );
     opacity: 0;
@@ -309,9 +341,9 @@ body {
 .tilt-3d:hover .tilt-layer {
   transform: perspective(600px) translateZ(34px);
   box-shadow:
-    0 14px 26px rgba(184, 150, 79, 0.45),
+    0 14px 26px rgba(168, 126, 30, 0.45),
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    inset 0 -1px 0 rgba(122, 84, 0, 0.25);
+    inset 0 -1px 0 rgba(110, 84, 23, 0.25);
 }
 
 /* ──────────────────────────────────────────────────────────────────────── */
@@ -328,7 +360,7 @@ body {
   opacity: 0;
   /* Soft edges come from the gradient itself — no `filter`/`will-change`, so an
      idle (mobile) orb is never promoted to a compositing layer. */
-  background: radial-gradient(circle, rgba(232,201,122,0.8), rgba(184,150,79,0.4) 40%, transparent 72%);
+  background: radial-gradient(circle, rgba(215,176,95,0.8), rgba(168,126,30,0.4) 40%, transparent 72%);
   transition: opacity 0.4s ease;
 }
 
@@ -340,7 +372,7 @@ body {
   animation-name: sparkle-twinkle;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
-  filter: drop-shadow(0 0 4px rgba(232,201,122,0.8));
+  filter: drop-shadow(0 0 4px rgba(215,176,95,0.8));
   will-change: opacity, transform;
 }
 
@@ -354,17 +386,17 @@ body {
   /* Real 2px gold border via padding-box/border-box layers — uniformly gold on
      all four edges and never clipped by overflow:hidden (unlike a masked ring). */
   background:
-    radial-gradient(ellipse at top left,     rgba(232,201,122,0.40), transparent 55%) padding-box,
-    radial-gradient(ellipse at bottom right,  rgba(184,150,79,0.28), transparent 55%) padding-box,
-    linear-gradient(135deg, #FFFFFF 0%, #FBF8F2 55%, #F5EDD8 100%) padding-box,
-    linear-gradient(180deg, #E8C97A 0%, #C9A55A 55%, #B8964F 100%) border-box;
+    radial-gradient(ellipse at top left,     rgba(215,176,95,0.40), transparent 55%) padding-box,
+    radial-gradient(ellipse at bottom right,  rgba(168,126,30,0.28), transparent 55%) padding-box,
+    linear-gradient(135deg, #FFFFFF 0%, #FFFDF8 55%, #EFE7D5 100%) padding-box,
+    linear-gradient(180deg, #D7B05F 0%, #B98A2E 55%, #A87E1E 100%) border-box;
   border: 2px solid transparent;
   border-radius: 28px;
   overflow: hidden;
   box-shadow:
     inset 0 1.5px 0 rgba(255,255,255,1),
-    0 2px 4px rgba(44,24,16,0.06),
-    0 30px 64px -24px rgba(44,24,16,0.22);
+    0 2px 4px rgba(43,39,34,0.06),
+    0 30px 64px -24px rgba(43,39,34,0.22);
 }
 .cta-aurora {
   content: '';
@@ -373,11 +405,11 @@ body {
   z-index: 0;
   background: conic-gradient(from 0deg,
     transparent 0%,
-    rgba(232,201,122,0.45) 18%,
+    rgba(215,176,95,0.45) 18%,
     transparent 38%,
-    rgba(184,150,79,0.32) 58%,
+    rgba(168,126,30,0.32) 58%,
     transparent 78%,
-    rgba(232,201,122,0.38) 92%,
+    rgba(215,176,95,0.38) 92%,
     transparent 100%);
   filter: blur(55px);
   animation: aurora 14s linear infinite;
@@ -388,12 +420,12 @@ body {
 /* ──────────────────────────────────────────────────────────────────────── */
 .gold-border {
   position: relative;
-  background: linear-gradient(180deg, #FFFFFF 0%, #FBF8F2 100%);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFFDF8 100%);
   border-radius: 28px;
 }
 .gold-border::before {
   content: ''; position: absolute; inset: 0; padding: 1.5px; border-radius: inherit;
-  background: linear-gradient(135deg, rgba(232,201,122,0.85), rgba(184,150,79,0.3), rgba(232,201,122,0.85));
+  background: linear-gradient(135deg, rgba(215,176,95,0.85), rgba(168,126,30,0.3), rgba(215,176,95,0.85));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
           mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
@@ -418,7 +450,7 @@ body {
 /* ──────────────────────────────────────────────────────────────────────── */
 
 .gradient-text {
-  background: linear-gradient(135deg, #B8964F 0%, #E8C97A 50%, #B8964F 100%);
+  background: linear-gradient(135deg, #A87E1E 0%, #D7B05F 50%, #A87E1E 100%);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 200% auto;
@@ -427,7 +459,7 @@ body {
 
 .divider-gold {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(184,150,79,0.45), transparent);
+  background: linear-gradient(90deg, transparent, rgba(168,126,30,0.45), transparent);
   background-size: 200% 100%;
   animation: lux-shimmer 6s linear infinite;
 }
@@ -437,15 +469,15 @@ body {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 5px 12px; border-radius: 999px;
   font-size: 10.5px; font-weight: 800;
-  font-family: var(--font-jost), sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   text-transform: uppercase; letter-spacing: 0.14em;
-  background: linear-gradient(180deg, #FFFFFF, #FBF8F2);
-  border: 1.5px solid rgba(184, 150, 79, 0.32);
-  color: #7A5E2A;
+  background: linear-gradient(180deg, #FFFFFF, #FFFDF8);
+  border: 1.5px solid rgba(168, 126, 30, 0.32);
+  color: #8A6717;
   box-shadow:
     inset 0 1.5px 0 rgba(255,255,255,1),
-    inset 0 -1.5px 0 rgba(184,150,79,0.14),
-    0 2px 6px -2px rgba(44,24,16,0.08);
+    inset 0 -1.5px 0 rgba(168,126,30,0.14),
+    0 2px 6px -2px rgba(43,39,34,0.08);
 }
 
 /* Gold filled chip — for active/featured states */
@@ -453,15 +485,15 @@ body {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 5px 12px; border-radius: 999px;
   font-size: 10.5px; font-weight: 800;
-  font-family: var(--font-jost), sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   text-transform: uppercase; letter-spacing: 0.14em;
-  background: linear-gradient(135deg, #E8C97A, #C9A55A, #B8964F);
+  background: linear-gradient(135deg, #D7B05F, #B98A2E, #A87E1E);
   border: 1.5px solid rgba(255,255,255,0.55);
-  color: #1E0F00;
+  color: #2B2722;
   box-shadow:
-    0 4px 12px rgba(184,150,79,0.35),
+    0 4px 12px rgba(168,126,30,0.35),
     inset 0 1px 0 rgba(255,255,255,0.5),
-    inset 0 -1px 0 rgba(122,84,0,0.25);
+    inset 0 -1px 0 rgba(110,84,23,0.25);
 }
 
 /* Keyboard key tag */
@@ -469,17 +501,17 @@ body {
   display: inline-flex; align-items: center; padding: 2px 7px;
   font-family: var(--font-mono);
   font-size: 11px; font-weight: 700;
-  background: linear-gradient(180deg, #FFFFFF, #F5EDD8);
-  border: 1px solid rgba(184, 150, 79, 0.32);
+  background: linear-gradient(180deg, #FFFFFF, #EFE7D5);
+  border: 1px solid rgba(168, 126, 30, 0.32);
   border-bottom-width: 2px;
   border-radius: 6px;
-  color: #1E0F00;
+  color: #2B2722;
 }
 
 /* Soft hairline section divider — clean horizontal gold gradient line, no dots */
 .divider-hairline {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(184,150,79,0.35), transparent);
+  background: linear-gradient(90deg, transparent, rgba(168,126,30,0.35), transparent);
 }
 
 /* Hairline divider with a tiny golden diamond in the centre (item 6) */
@@ -493,15 +525,15 @@ body {
   content: '';
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(184,150,79,0.35), transparent);
+  background: linear-gradient(90deg, transparent, rgba(168,126,30,0.35), transparent);
 }
 .divider-diamond span {
   flex: none;
   width: 8px; height: 8px;
   transform: rotate(45deg);
   border-radius: 1.5px;
-  background: linear-gradient(135deg, #E8C97A, #B8964F);
-  box-shadow: 0 0 10px rgba(232,201,122,0.75), inset 0 1px 0 rgba(255,255,255,0.6);
+  background: linear-gradient(135deg, #D7B05F, #A87E1E);
+  box-shadow: 0 0 10px rgba(215,176,95,0.75), inset 0 1px 0 rgba(255,255,255,0.6);
 }
 
 /* ──────────────────────────────────────────────────────────────────────── */
@@ -514,15 +546,15 @@ body {
      (unlayered CSS outranks utility-layer classes), un-sticking the header.
      `position: sticky` is itself a positioning context for ::before. */
   background: linear-gradient(180deg,
-    rgba(255, 252, 245, 0.82) 0%,
-    rgba(251, 248, 242, 0.70) 60%,
-    rgba(245, 237, 216, 0.55) 100%);
+    rgba(255, 253, 248, 0.82) 0%,
+    rgba(248, 243, 232, 0.70) 60%,
+    rgba(239, 231, 213, 0.55) 100%);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   box-shadow:
     inset 0 1.5px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 0 rgba(184, 150, 79, 0.08),
-    0 10px 28px -10px rgba(44, 24, 16, 0.16);
+    inset 0 -1px 0 rgba(168, 126, 30, 0.08),
+    0 10px 28px -10px rgba(43, 39, 34, 0.16);
 }
 
 /* Plastic gloss — soft white highlight across the top edge */
@@ -539,13 +571,13 @@ body {
 
 .header-melt.is-scrolled {
   background: linear-gradient(180deg,
-    rgba(255, 252, 245, 0.94) 0%,
-    rgba(251, 248, 242, 0.86) 60%,
-    rgba(245, 237, 216, 0.72) 100%);
+    rgba(255, 253, 248, 0.94) 0%,
+    rgba(248, 243, 232, 0.86) 60%,
+    rgba(239, 231, 213, 0.72) 100%);
   box-shadow:
     inset 0 1.5px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 0 rgba(184, 150, 79, 0.12),
-    0 14px 36px -12px rgba(44, 24, 16, 0.22);
+    inset 0 -1px 0 rgba(168, 126, 30, 0.12),
+    0 14px 36px -12px rgba(43, 39, 34, 0.22);
 }
 
 /* Logo shimmer — subtle gold reflection that travels across the icon */
@@ -582,7 +614,7 @@ body {
   content: '';
   position: absolute; left: 12px; right: 12px; bottom: 4px;
   height: 1.5px;
-  background: linear-gradient(90deg, transparent, #B8964F, transparent);
+  background: linear-gradient(90deg, transparent, #A87E1E, transparent);
   transform: scaleX(0);
   transform-origin: center;
   transition: transform 0.3s ease;
@@ -607,8 +639,8 @@ body {
   left: 0; bottom: -3px;
   width: 18px; height: 2px;
   border-radius: 2px;
-  background: linear-gradient(90deg, #E8C97A, #B8964F);
-  box-shadow: 0 1px 4px rgba(184, 150, 79, 0.45);
+  background: linear-gradient(90deg, #D7B05F, #A87E1E);
+  box-shadow: 0 1px 4px rgba(168, 126, 30, 0.45);
 }
 
 /* ──────────────────────────────────────────────────────────────────────── */
@@ -625,14 +657,14 @@ body {
 /* Legal prose                                                              */
 /* ──────────────────────────────────────────────────────────────────────── */
 
-.legal-prose h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; color: #1E0F00; margin-top: 2.5rem; margin-bottom: 0.75rem; }
-.legal-prose h3 { font-size: 1.125rem; font-weight: 700; color: #1E0F00; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+.legal-prose h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; color: #2B2722; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+.legal-prose h3 { font-size: 1.125rem; font-weight: 700; color: #2B2722; margin-top: 1.5rem; margin-bottom: 0.5rem; }
 .legal-prose p  { font-size: 15px; line-height: 1.65; color: #6B6B6B; margin-bottom: 1rem; }
 .legal-prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
 .legal-prose ul > li { font-size: 15px; line-height: 1.65; color: #6B6B6B; margin-bottom: 0.375rem; }
-.legal-prose a  { color: #B8964F; font-weight: 600; text-underline-offset: 2px; }
-.legal-prose a:hover { color: #C9A55A; text-decoration: underline; }
-.legal-prose code { font-family: var(--font-mono); font-size: 13px; background: rgba(184, 150, 79, 0.12); padding: 2px 6px; border-radius: 4px; }
+.legal-prose a  { color: #A87E1E; font-weight: 600; text-underline-offset: 2px; }
+.legal-prose a:hover { color: #B98A2E; text-decoration: underline; }
+.legal-prose code { font-family: var(--font-mono); font-size: 13px; background: rgba(168, 126, 30, 0.12); padding: 2px 6px; border-radius: 4px; }
 
 /* ──────────────────────────────────────────────────────────────────────── */
 /* REDUCED MOTION — honour the user's OS preference everywhere (items 5/6)  */
@@ -643,6 +675,10 @@ body {
   .sparkle,
   .cursor-glow,
   .cta-aurora { display: none !important; }
+
+  /* Gold dust stays visible but stops drifting/twinkling */
+  .gm-galaxy,
+  .gm-galaxy::after { animation: none !important; }
 
   /* Freeze every ambient/looping animation at its resting state */
   .invoice-spin,

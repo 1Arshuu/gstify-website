@@ -22,10 +22,10 @@ export default async function OpengraphImage() {
           flexDirection: 'column',
           justifyContent: 'center',
           padding: '90px',
-          color: '#1E0F00',
-          backgroundColor: '#FBF8F2',
+          color: '#2B2722',
+          backgroundColor: '#FFFDF8',
           backgroundImage:
-            'radial-gradient(900px circle at 12% 0%, rgba(232,201,122,0.55), transparent 55%), radial-gradient(800px circle at 100% 100%, rgba(184,150,79,0.40), transparent 55%)',
+            'radial-gradient(900px circle at 12% 0%, rgba(215,176,95,0.55), transparent 55%), radial-gradient(800px circle at 100% 100%, rgba(168,126,30,0.40), transparent 55%)',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
@@ -60,15 +60,15 @@ export default async function OpengraphImage() {
               display: 'flex',
               padding: '12px 24px',
               borderRadius: '999px',
-              background: 'linear-gradient(135deg, #E8C97A, #C9A55A, #B8964F)',
-              color: '#1E0F00',
+              background: 'linear-gradient(135deg, #D7B05F, #B98A2E, #A87E1E)',
+              color: '#2B2722',
               fontSize: '26px',
               fontWeight: 800,
             }}
           >
             Free GST Billing
           </div>
-          <span style={{ fontSize: '26px', color: '#7A5E2A', fontWeight: 700 }}>· Made in India 🇮🇳</span>
+          <span style={{ fontSize: '26px', color: '#8A6717', fontWeight: 700 }}>· Made in India 🇮🇳</span>
         </div>
       </div>
     ),

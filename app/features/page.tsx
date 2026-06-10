@@ -2,7 +2,7 @@
 import {
   Receipt, Calculator, CloudUpload, Globe, FileText, Banknote,
   Smartphone, Lock, Users, Package, BarChart3, FileSignature,
-  Repeat, Wallet, FileMinus, Scale, FileSpreadsheet,
+  Repeat, Wallet, FileMinus, Scale, FileSpreadsheet, ShoppingBag, ArrowUpCircle,
 } from 'lucide-react';
 import { Reveal } from '@/components/Reveal';
 import { SectionHeading } from '@/components/SectionHeading';
@@ -17,7 +17,10 @@ const features = [
   { icon: Users,        title: 'Outstanding Balance',      body: 'Live per-customer running balance. Excludes estimates (proforma/quotation) and counter sales (POS).' },
   { icon: Package,      title: 'Product Catalog',          body: 'Save top sellers with HSN, rate, unit. Add to an invoice with one tap.' },
   { icon: BarChart3,    title: 'GST Reports',              body: 'Monthly sales, GST split (CGST/SGST/IGST), top customers — exportable as PDF.' },
-  { icon: FileSpreadsheet, title: 'GSTR-Ready Exports',    body: 'Export GSTR-1, GSTR-2, GSTR-3B and GSTR-9 data as CSV — ready to file with your return.' },
+  { icon: FileSpreadsheet, title: 'GSTR Filing Pages',     body: 'Dedicated GSTR-1, GSTR-2, GSTR-3B and GSTR-9 pages — pick the period, preview every section, export as CSV, JSON or PDF.' },
+  { icon: Scale,        title: 'GST Ledger',               body: 'Output GST minus Input GST = your net payable. Record each GST challan and watch the balance settle to zero.' },
+  { icon: ShoppingBag,  title: 'Walk-in POS Billing',      body: 'Bill counter sales without picking a customer — or jot a quick name, phone and GSTIN. Nothing slows the queue.' },
+  { icon: ArrowUpCircle, title: 'Upgrade-Safe Data',       body: 'Move from Free to Pro and every invoice, customer, product and payment is uploaded to the cloud automatically.' },
   { icon: Repeat,       title: 'Recurring Invoices',       body: 'Set a weekly, monthly, quarterly or yearly schedule and GSTify auto-generates each invoice for you. (Pro)' },
   { icon: Wallet,       title: 'Expense Tracking',         body: 'Log business costs by category with GST and vendor details — keep spending and input credit in one place.' },
   { icon: FileMinus,    title: 'Credit Notes',             body: 'Issue a credit note against any invoice with partial returns, a reason, and optional stock restock.' },
@@ -41,7 +44,7 @@ export default function Features() {
           {features.map((f, i) => (
             <Reveal key={f.title} delay={(i % 6) * 50}
                     className="lux-card rounded-2xl p-6 hover:-translate-y-1 transition-transform duration-300 group">
-              <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl gold-gradient mb-4 shadow-[0_4px_14px_rgba(184,150,79,0.30)] group-hover:shadow-[0_8px_22px_rgba(184,150,79,0.45)] transition-shadow">
+              <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl gold-gradient mb-4 shadow-[0_4px_14px_rgba(168,126,30,0.30)] group-hover:shadow-[0_8px_22px_rgba(168,126,30,0.45)] transition-shadow">
                 <f.icon className="h-6 w-6 text-dark-brown" strokeWidth={2.4} />
               </span>
               <h3 className="font-display text-lg font-extrabold text-dark-brown mb-1.5" style={{ letterSpacing: '-0.02em' }}>

@@ -20,9 +20,9 @@ export const BRAND = {
 
   // Colors — matches the app palette
   colors: {
-    gold:      '#B8964F',
-    champagne: '#E8C97A',
-    darkBrown: '#1E0F00',
-    cream:     '#FBF8F2',
+    gold:      '#A87E1E',
+    champagne: '#D7B05F',
+    darkBrown: '#2B2722',
+    cream:     '#FFFDF8',
   },
 } as const;

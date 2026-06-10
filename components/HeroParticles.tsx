@@ -69,9 +69,9 @@ function createStructuredSmokeTexture(seed = 1) {
 
     const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, radius);
     // Golden body — brightened additively so it reads as warm gold light.
-    gradient.addColorStop(0, 'rgba(232, 201, 122, 0.95)');
+    gradient.addColorStop(0, 'rgba(215, 176, 95, 0.95)');
     gradient.addColorStop(0.35, 'rgba(216, 178, 100, 0.60)');
-    gradient.addColorStop(0.7, 'rgba(184, 150, 79, 0.30)');
+    gradient.addColorStop(0.7, 'rgba(168, 126, 30, 0.30)');
     gradient.addColorStop(1, 'rgba(150, 110, 40, 0)');
 
     ctx.fillStyle = gradient;
@@ -165,7 +165,7 @@ function GoldDust({ texture, count = 32 }: { texture: THREE.Texture; count?: num
         transparent
         size={0.075}
         sizeAttenuation
-        color="#E8C97A"
+        color="#D7B05F"
         opacity={0.25}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
@@ -297,7 +297,7 @@ function PremiumGoldenSmoke({ textures, count = 34 }: { textures: THREE.Texture[
         >
           <spriteMaterial
             map={textures[s.textureIndex]}
-            color="#E8C97A"
+            color="#D7B05F"
             transparent
             opacity={s.opacity}
             depthWrite={false}

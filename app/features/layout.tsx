@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Features',
   description:
-    'Everything GSTify does: five GST document types (Tax Invoice, Delivery Challan, Proforma, Quotation, POS), per-line GST rates, 5 PDF templates, offline-first billing, smart payment allocation, and Google Drive backup.',
+    'Everything GSTify does: five GST document types (Tax Invoice, Delivery Challan, Proforma, Quotation, POS), per-line GST rates, GST Ledger, GSTR-1/2/3B/9 filing exports, 5 PDF templates, offline-first billing, smart payment allocation, and Google Drive backup.',
   alternates: { canonical: '/features' },
   openGraph: {
     title: 'Features · GSTify',

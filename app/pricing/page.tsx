@@ -119,7 +119,7 @@ export default function Pricing() {
                  border: '1.5px solid rgba(234,179,8,0.34)',
                }}>
             <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl flex-shrink-0"
-                  style={{ background: 'linear-gradient(135deg,#E8C97A,#C9A55A,#B8964F)', boxShadow: '0 4px 12px rgba(184,150,79,0.35)' }}>
+                  style={{ background: 'linear-gradient(135deg,#D7B05F,#B98A2E,#A87E1E)', boxShadow: '0 4px 12px rgba(168,126,30,0.35)' }}>
               <CloudUpload className="h-5 w-5 text-dark-brown" strokeWidth={2.4} />
             </span>
             <div>
@@ -132,6 +132,27 @@ export default function Pricing() {
                 the device is lost, or app data is cleared, that data <strong>cannot be recovered</strong> unless
                 you have connected Google Drive backup. We strongly recommend connecting Drive right after your
                 first invoice. <strong>GSTify is not responsible for any data loss where Drive backup was not enabled.</strong>
+              </p>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Upgrade reassurance — the app migrates local Free-plan data to the
+            cloud automatically on first Pro/Business launch. */}
+        <Reveal className="mt-4 max-w-3xl mx-auto">
+          <div className="rounded-2xl p-5 sm:p-6 flex items-start gap-4 lux-card-soft">
+            <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl flex-shrink-0"
+                  style={{ background: 'linear-gradient(135deg,#D7B05F,#B98A2E,#A87E1E)', boxShadow: '0 4px 12px rgba(168,126,30,0.35)' }}>
+              <Crown className="h-5 w-5 text-dark-brown" strokeWidth={2.4} />
+            </span>
+            <div>
+              <p className="font-display text-lg font-extrabold text-dark-brown" style={{ letterSpacing: '-0.02em' }}>
+                Upgrading? Your data comes with you
+              </p>
+              <p className="mt-1.5 text-[14px] leading-relaxed" style={{ color: '#6B6B6B' }}>
+                The moment you move from Free to Pro or Business, every invoice, customer, product,
+                payment and expense on your device is <strong>uploaded to the cloud automatically</strong> —
+                nothing to export, nothing lost, and from then on your data syncs across all your devices.
               </p>
             </div>
           </div>
@@ -158,7 +179,7 @@ export default function Pricing() {
               { q: 'Cancel anytime?',  a: 'Cancel from Google Play. Effective end of current billing cycle.' },
             ].map((f) => (
               <Reveal key={f.q} className="app-card rounded-2xl p-5">
-                <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#7A5E2A] mb-1.5"
+                <p className="text-[11px] font-extrabold uppercase tracking-wider text-[#8A6717] mb-1.5"
                    style={{ letterSpacing: '0.14em' }}>
                   {f.q}
                 </p>

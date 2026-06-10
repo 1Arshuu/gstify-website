@@ -22,8 +22,8 @@ const HeroParticles = dynamic(() => import('@/components/HeroParticles'), { ssr:
 
 const marqueeItems = [
   'Tax Invoice', '·', 'Delivery Challan', '·', 'Proforma', '·',
-  'Quotation', '·', 'POS Bill', '·',
-  '5 PDF Templates', '·', 'Offline-First', '·', 'Drive Backup', '·',
+  'Quotation', '·', 'POS Bill', '·', 'GST Ledger', '·',
+  'GSTR Filing', '·', '5 PDF Templates', '·', 'Offline-First', '·', 'Drive Backup', '·',
 ];
 
 export default function Home() {
@@ -62,9 +62,9 @@ export default function Home() {
 
         {/* Ambient gold orbs (parallax targets) — mobile only now */}
         <div ref={orb1} aria-hidden className="lg:hidden absolute -top-40 -left-32 w-[520px] h-[520px] rounded-full pointer-events-none opacity-55 will-change-transform"
-             style={{ background: 'radial-gradient(circle, rgba(232,201,122,0.55), transparent 70%)', filter: 'blur(80px)' }} />
+             style={{ background: 'radial-gradient(circle, rgba(215,176,95,0.55), transparent 70%)', filter: 'blur(80px)' }} />
         <div ref={orb2} aria-hidden className="lg:hidden absolute top-1/2 -right-32 w-[480px] h-[480px] rounded-full pointer-events-none opacity-45 will-change-transform"
-             style={{ background: 'radial-gradient(circle, rgba(184,150,79,0.40), transparent 70%)', filter: 'blur(80px)' }} />
+             style={{ background: 'radial-gradient(circle, rgba(168,126,30,0.40), transparent 70%)', filter: 'blur(80px)' }} />
 
         {/* Magical floating sparkles */}
         <Sparkles />
@@ -131,7 +131,7 @@ export default function Home() {
                 <div className="flex items-center gap-2">
                   <div className="flex gap-0.5">
                     {[0, 1, 2, 3, 4].map((i) => (
-                      <Star key={i} className="h-4 w-4 fill-[#E8C97A] text-[#E8C97A]" strokeWidth={1.5} />
+                      <Star key={i} className="h-4 w-4 fill-[#D7B05F] text-[#D7B05F]" strokeWidth={1.5} />
                     ))}
                   </div>
                   <span className="text-sm font-bold text-dark-brown">4.9</span>
@@ -158,7 +158,7 @@ export default function Home() {
               {/* Soft rotating halo */}
               <div aria-hidden className="absolute inset-0 m-auto w-[440px] h-[440px] rounded-full pointer-events-none opacity-45 animate-lux-rotate"
                    style={{
-                     background: 'conic-gradient(from 0deg, transparent, rgba(232,201,122,0.45), transparent 60%)',
+                     background: 'conic-gradient(from 0deg, transparent, rgba(215,176,95,0.45), transparent 60%)',
                      filter: 'blur(44px)',
                    }} />
 
@@ -177,8 +177,8 @@ export default function Home() {
             <Marquee speed={14}>
               {marqueeItems.map((item, i) => (
                 <span key={i}
-                      className={`text-sm font-extrabold uppercase ${item === '·' ? 'text-[#B8964F]/40' : 'text-[#7A5E2A]'}`}
-                      style={{ letterSpacing: '0.18em', fontFamily: 'var(--font-jost), sans-serif' }}>
+                      className={`text-sm font-extrabold uppercase ${item === '·' ? 'text-[#A87E1E]/40' : 'text-[#8A6717]'}`}
+                      style={{ letterSpacing: '0.18em', fontFamily: 'var(--font-poppins), sans-serif' }}>
                   {item}
                 </span>
               ))}
@@ -191,7 +191,7 @@ export default function Home() {
       {/* ════════════════════════ BENTO FEATURES ════════════════════════ */}
       <section className="surface-warm noise-overlay py-14 sm:py-20 lg:py-24 relative overflow-x-clip">
         <div aria-hidden className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full pointer-events-none opacity-20"
-             style={{ background: 'radial-gradient(circle, rgba(232,201,122,0.30), transparent 60%)', filter: 'blur(80px)' }} />
+             style={{ background: 'radial-gradient(circle, rgba(215,176,95,0.30), transparent 60%)', filter: 'blur(80px)' }} />
 
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl relative">
           <SectionHeading
@@ -212,14 +212,14 @@ export default function Home() {
             <Reveal className="md:col-span-4">
               <SpotlightCard className="lux-card app-card-hover rounded-3xl p-7 overflow-hidden relative flex flex-col md:h-full">
                 <div aria-hidden className="absolute -top-12 -right-12 w-56 h-56 rounded-full opacity-40 pointer-events-none"
-                     style={{ background: 'radial-gradient(circle, rgba(232,201,122,0.50), transparent 70%)', filter: 'blur(30px)' }} />
+                     style={{ background: 'radial-gradient(circle, rgba(215,176,95,0.50), transparent 70%)', filter: 'blur(30px)' }} />
                 <IconTile><Receipt className="h-6 w-6 text-dark-brown" strokeWidth={2.4} /></IconTile>
                 <h3 className="font-display text-2xl lg:text-3xl font-black text-dark-brown mt-5"
                     style={{ letterSpacing: '-0.025em' }}>
                   5 document types
                 </h3>
                 <p className="mt-3 text-[15px] leading-relaxed max-w-md"
-                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-jost), sans-serif' }}>
+                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-poppins), sans-serif' }}>
                   Tax Invoice, Delivery Challan, Proforma, Quotation, and POS Cash Memo — all share the same fast UI.
                 </p>
                 <div className="flex flex-wrap gap-2 mt-5 md:mt-auto md:pt-5">
@@ -239,7 +239,7 @@ export default function Home() {
                   Per-line GST rates
                 </h3>
                 <p className="mt-2 text-[14px] leading-relaxed"
-                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-jost), sans-serif' }}>
+                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-poppins), sans-serif' }}>
                   Mix 5%, 12%, 18%, 28% on one bill. CGST/SGST vs IGST handled by state.
                 </p>
               </SpotlightCard>
@@ -254,7 +254,7 @@ export default function Home() {
                   Drive backup
                 </h3>
                 <p className="mt-2 text-[14px] leading-relaxed"
-                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-jost), sans-serif' }}>
+                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-poppins), sans-serif' }}>
                   Auto-syncs to <em>your</em> Drive on appData scope. Restore in seconds.
                   Free-plan data lives on-device — connect Drive to keep it safe.
                 </p>
@@ -270,7 +270,7 @@ export default function Home() {
                   Offline-first
                 </h3>
                 <p className="mt-2 text-[14px] leading-relaxed"
-                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-jost), sans-serif' }}>
+                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-poppins), sans-serif' }}>
                   Bill on the move. Everything syncs when you reconnect.
                 </p>
               </SpotlightCard>
@@ -282,12 +282,12 @@ export default function Home() {
                 <div className="flex items-start justify-between">
                   <IconTile><Layers className="h-5 w-5 text-dark-brown" strokeWidth={2.4} /></IconTile>
                   <div className="flex gap-1.5">
-                    {['#B8964F', '#0E0805', '#1D357A', '#C9785A', '#047857'].map((c) => (
+                    {['#A87E1E', '#2B2722', '#1D357A', '#C9785A', '#047857'].map((c) => (
                       <span key={c} className="w-5 h-5 rounded-md"
                             style={{
                               background: c,
                               border: '1.5px solid rgba(255,255,255,0.7)',
-                              boxShadow: '0 2px 6px rgba(44,24,16,0.18)',
+                              boxShadow: '0 2px 6px rgba(43,39,34,0.18)',
                             }} />
                     ))}
                   </div>
@@ -297,7 +297,7 @@ export default function Home() {
                   5 PDF templates
                 </h3>
                 <p className="mt-2 text-[14px] leading-relaxed"
-                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-jost), sans-serif' }}>
+                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-poppins), sans-serif' }}>
                   Classic Gold, Modern Midnight, Sapphire, Rose, Emerald.
                 </p>
               </SpotlightCard>
@@ -312,7 +312,7 @@ export default function Home() {
                   Smart payment allocation
                 </h3>
                 <p className="mt-2 text-[14px] lg:text-[15px] leading-relaxed max-w-md"
-                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-jost), sans-serif' }}>
+                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-poppins), sans-serif' }}>
                   Record one customer payment — we auto-split it across their oldest pending invoices. Anything left becomes an advance.
                 </p>
               </SpotlightCard>
@@ -356,12 +356,12 @@ export default function Home() {
                        style={{ fontSize: 'clamp(2.25rem, 5vw, 3.5rem)', letterSpacing: '-0.03em', lineHeight: 1 }}>
                     <Counter to={s.value} suffix={s.suffix} />
                   </div>
-                  <p className="mt-3 text-[10.5px] font-extrabold uppercase text-[#7A5E2A]"
-                     style={{ letterSpacing: '0.14em', fontFamily: 'var(--font-jost), sans-serif' }}>
+                  <p className="mt-3 text-[10.5px] font-extrabold uppercase text-[#8A6717]"
+                     style={{ letterSpacing: '0.14em', fontFamily: 'var(--font-poppins), sans-serif' }}>
                     {s.label}
                   </p>
                   <p className="mt-1 text-xs font-semibold text-[#6B6B6B]"
-                     style={{ fontFamily: 'var(--font-jost), sans-serif' }}>
+                     style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
                     {s.hint}
                   </p>
                 </SpotlightCard>
@@ -381,7 +381,7 @@ export default function Home() {
 
           <div className="mt-12 sm:mt-16 grid md:grid-cols-3 gap-4 sm:gap-5 relative grid-3d">
             <div aria-hidden className="hidden md:block absolute top-14 left-[16%] right-[16%] h-px"
-                 style={{ background: 'linear-gradient(90deg, transparent, rgba(184,150,79,0.45), transparent)' }} />
+                 style={{ background: 'linear-gradient(90deg, transparent, rgba(168,126,30,0.45), transparent)' }} />
 
             {[
               { n: '01', title: 'Install', body: 'Free on the Play Store. No card. No trial timer.' },
@@ -396,7 +396,7 @@ export default function Home() {
                     {s.title}
                   </h3>
                   <p className="mt-2 text-[15px] leading-relaxed"
-                     style={{ color: '#6B6B6B', fontFamily: 'var(--font-jost), sans-serif' }}>
+                     style={{ color: '#6B6B6B', fontFamily: 'var(--font-poppins), sans-serif' }}>
                     {s.body}
                   </p>
                 </SpotlightCard>
@@ -412,7 +412,7 @@ export default function Home() {
           <Reveal>
             <div className="banner-bg gold-border noise-overlay rounded-3xl p-8 sm:p-10 lg:p-16 text-center relative overflow-hidden">
               <div aria-hidden className="absolute inset-0 pointer-events-none opacity-40"
-                   style={{ background: 'radial-gradient(ellipse at center, rgba(232,201,122,0.55), transparent 70%)' }} />
+                   style={{ background: 'radial-gradient(ellipse at center, rgba(215,176,95,0.55), transparent 70%)' }} />
 
               <span className="chip relative mb-5">
                 <SparklesIcon className="h-3 w-3" strokeWidth={2.6} />
@@ -424,7 +424,7 @@ export default function Home() {
                 <span className="gradient-text italic">50 invoices</span> a month.
               </h2>
               <p className="relative mt-5 sm:mt-6 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed"
-                 style={{ color: '#6B6B6B', fontFamily: 'var(--font-jost), sans-serif' }}>
+                 style={{ color: '#6B6B6B', fontFamily: 'var(--font-poppins), sans-serif' }}>
                 No credit card. No trial countdown. Upgrade to Pro (₹199/month) only when you outgrow it.
               </p>
               <div className="relative mt-8 flex gap-3 flex-wrap justify-center">
@@ -464,7 +464,7 @@ export default function Home() {
                 <div className="inline-flex w-16 h-16 rounded-2xl items-center justify-center mb-6 gold-gradient"
                      style={{
                        border: '1.5px solid rgba(255,255,255,0.55)',
-                       boxShadow: '0 12px 30px rgba(184,150,79,0.45), inset 0 1.5px 0 rgba(255,255,255,0.6)',
+                       boxShadow: '0 12px 30px rgba(168,126,30,0.45), inset 0 1.5px 0 rgba(255,255,255,0.6)',
                      }}>
                   <Smartphone className="h-8 w-8 text-dark-brown" strokeWidth={2.2} />
                 </div>
@@ -474,7 +474,7 @@ export default function Home() {
                   <span className="gradient-text italic">paper bills.</span>
                 </h2>
                 <p className="mt-5 text-base sm:text-lg leading-relaxed"
-                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-jost), sans-serif' }}>
+                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-poppins), sans-serif' }}>
                   Two-minute setup. Free forever for small businesses. India-first design.
                 </p>
                 <motion.a
@@ -491,7 +491,7 @@ export default function Home() {
                   <Download className="h-4 w-4" strokeWidth={2.8} /> Get the App
                 </motion.a>
                 <p className="mt-5 text-xs font-semibold"
-                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-jost), sans-serif' }}>
+                   style={{ color: '#6B6B6B', fontFamily: 'var(--font-poppins), sans-serif' }}>
                   Android · Free · ₹0 to start
                 </p>
               </div>
@@ -511,7 +511,7 @@ function IconTile({ children }: { children: React.ReactNode }) {
           style={{
             border: '1.5px solid rgba(255,255,255,0.55)',
             boxShadow:
-              '0 6px 16px rgba(184,150,79,0.40), inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -1px 0 rgba(122,84,0,0.25)',
+              '0 6px 16px rgba(168,126,30,0.40), inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -1px 0 rgba(110,84,23,0.25)',
           }}>
       {children}
     </span>

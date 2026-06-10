@@ -25,6 +25,10 @@ const faq = [
     a: 'Yes. Data is stored in Supabase (encrypted in transit + at rest). Backups go to your own Google Drive. We never see your invoice contents.',
   },
   {
+    q: 'What happens to my data when I upgrade to Pro?',
+    a: 'It moves with you — automatically. On your first launch as a Pro/Business user, every invoice, customer, product, payment and expense stored on your device is uploaded to the cloud. From then on your data syncs across all your signed-in devices.',
+  },
+  {
     q: 'Can I cancel my subscription?',
     a: 'Yes. Pro and Business subscriptions are managed through Google Play. Cancel any time from your Google Play subscriptions page.',
   },

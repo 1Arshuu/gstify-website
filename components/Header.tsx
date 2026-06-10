@@ -36,7 +36,7 @@ export const Header = () => {
         <Link href="/" className="flex items-center gap-2.5 group">
           <span
             className="logo-shine relative inline-flex w-9 h-9 rounded-xl overflow-hidden transition-transform group-hover:scale-105"
-            style={{ boxShadow: '0 6px 18px rgba(184,150,79,0.40)' }}
+            style={{ boxShadow: '0 6px 18px rgba(168,126,30,0.40)' }}
           >
             <Image
               src="/logo.png"
@@ -65,17 +65,17 @@ export const Header = () => {
                     'nav-underline relative inline-flex items-center px-4 py-2 rounded-full text-sm font-bold transition-colors',
                     active ? 'text-dark-brown' : 'text-[#6B6B6B] hover:text-dark-brown',
                   )}
-                  style={{ fontFamily: 'var(--font-jost), sans-serif' }}
+                  style={{ fontFamily: 'var(--font-poppins), sans-serif' }}
                 >
                   {active && (
                     <span
                       aria-hidden
                       className="absolute inset-0 rounded-full"
                       style={{
-                        background: 'linear-gradient(180deg, rgba(232,201,122,0.28), rgba(184,150,79,0.16))',
-                        border: '1.5px solid rgba(184,150,79,0.40)',
+                        background: 'linear-gradient(180deg, rgba(215,176,95,0.28), rgba(168,126,30,0.16))',
+                        border: '1.5px solid rgba(168,126,30,0.40)',
                         boxShadow:
-                          'inset 0 1px 0 rgba(255,255,255,0.85), 0 3px 10px -3px rgba(184,150,79,0.35)',
+                          'inset 0 1px 0 rgba(255,255,255,0.85), 0 3px 10px -3px rgba(168,126,30,0.35)',
                         zIndex: 0,
                       }}
                     />
@@ -131,13 +131,13 @@ export const Header = () => {
                         : 'text-[#6B6B6B] hover:bg-gold/10 hover:text-dark-brown',
                     )}
                     style={{
-                      fontFamily: 'var(--font-jost), sans-serif',
+                      fontFamily: 'var(--font-poppins), sans-serif',
                       background: active
-                        ? 'linear-gradient(180deg, rgba(232,201,122,0.28), rgba(184,150,79,0.16))'
+                        ? 'linear-gradient(180deg, rgba(215,176,95,0.28), rgba(168,126,30,0.16))'
                         : undefined,
-                      border: active ? '1.5px solid rgba(184,150,79,0.40)' : '1.5px solid transparent',
+                      border: active ? '1.5px solid rgba(168,126,30,0.40)' : '1.5px solid transparent',
                       boxShadow: active
-                        ? 'inset 0 1px 0 rgba(255,255,255,0.85), 0 3px 10px -3px rgba(184,150,79,0.30)'
+                        ? 'inset 0 1px 0 rgba(255,255,255,0.85), 0 3px 10px -3px rgba(168,126,30,0.30)'
                         : undefined,
                     }}
                   >

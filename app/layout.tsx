@@ -1,24 +1,25 @@
 import type { Metadata, Viewport } from 'next';
-import { Jost, Cormorant_Garamond, JetBrains_Mono } from 'next/font/google';
+import { Jost, Poppins, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { CursorGlow } from '@/components/CursorGlow';
 import { BRAND } from '@/lib/brand';
 
-// Body / UI — geometric sans
+// Display / headings — geometric sans (matches the app's heading font)
 const jost = Jost({
   subsets: ['latin'],
   variable: '--font-jost',
   weight:   ['400', '500', '600', '700', '800'],
+  style:    ['normal', 'italic'],
   display:  'swap',
 });
 
-// Display / headings — elegant serif (roman + italic)
-const cormorant = Cormorant_Garamond({
+// Body / UI — rounded humanist sans (matches the app's body font)
+const poppins = Poppins({
   subsets: ['latin'],
-  variable: '--font-cormorant',
-  weight:   ['400', '500', '600', '700'],
+  variable: '--font-poppins',
+  weight:   ['300', '400', '500', '600', '700', '800'],
   style:    ['normal', 'italic'],
   display:  'swap',
 });
@@ -126,7 +127,7 @@ const jsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning
-          className={`${jost.variable} ${cormorant.variable} ${jetbrainsMono.variable}`}>
+          className={`${jost.variable} ${poppins.variable} ${jetbrainsMono.variable}`}>
       <body suppressHydrationWarning className="min-h-screen flex flex-col">
         <script
           type="application/ld+json"
@@ -134,9 +135,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         {/* Cursor-following gold glow — site-wide, self-disables on touch */}
         <CursorGlow />
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        {/* Ivory Gold signature: drifting gold-dust field behind everything.
+            Content sits in the z-1 .gm-content wrapper; section surfaces are
+            slightly translucent so the dust shimmers through. */}
+        <div className="gm-galaxy" aria-hidden />
+        <div className="gm-content flex min-h-screen flex-1 flex-col">
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
