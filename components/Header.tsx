@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
 import { BRAND } from '@/lib/brand';
 import { cn } from '@/lib/utils';
@@ -18,19 +18,64 @@ export const Header = () => {
   const pathname                = usePathname();
   const [open, setOpen]         = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden]     = useState(false);
+  const lastY                   = useRef(0);
+  const hoveringTop             = useRef(false);
 
+  // Reveal-on-hover header: it slides away as you scroll down and reappears
+  // when you scroll up OR move the cursor near the top edge of the screen.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    lastY.current = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 12);
+      // Always show near the very top or while the cursor is hovering the top.
+      if (hoveringTop.current || y < 80) { setHidden(false); lastY.current = y; return; }
+      if (y > lastY.current + 4)      setHidden(true);   // scrolling down → hide
+      else if (y < lastY.current - 4) setHidden(false);  // scrolling up → reveal
+      lastY.current = y;
+    };
+    const onMove = (e: MouseEvent) => {
+      const near = e.clientY <= 80;
+      hoveringTop.current = near;
+      if (near) setHidden(false);
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('mousemove', onMove, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('mousemove', onMove);
+    };
   }, []);
+
+  // Never hide while the mobile menu is open.
+  const isHidden = hidden && !open;
 
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   return (
-    <header className={cn('sticky top-0 z-50 header-melt transition-shadow duration-300', scrolled && 'is-scrolled')}>
+    <>
+    {/* Thin gold hover-hint strip — sits at the very top so users discover that
+        moving to the top reveals the menu. Only shows while the bar is hidden. */}
+    <div
+      aria-hidden
+      className="fixed top-0 left-0 right-0 z-40 pointer-events-none transition-opacity duration-300"
+      style={{
+        height: 3,
+        opacity: isHidden ? 1 : 0,
+        background: 'linear-gradient(90deg, transparent, rgba(168,126,30,0.55), rgba(215,176,95,0.9), rgba(168,126,30,0.55), transparent)',
+      }}
+    />
+    <header
+      className={cn('sticky top-0 z-50 header-melt', scrolled && 'is-scrolled')}
+      style={{
+        transform: isHidden ? 'translateY(-100%)' : 'translateY(0)',
+        transition: 'transform 0.45s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease',
+        willChange: 'transform',
+      }}
+    >
       <nav className="relative z-10 container mx-auto px-3 sm:px-6 max-w-6xl h-16 flex items-center justify-between">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2.5 group">
@@ -63,7 +108,7 @@ export const Header = () => {
                   href={l.href}
                   className={cn(
                     'nav-underline relative inline-flex items-center px-4 py-2 rounded-full text-sm font-bold transition-colors',
-                    active ? 'text-dark-brown' : 'text-[#6B6B6B] hover:text-dark-brown',
+                    active ? 'text-dark-brown' : 'text-[#9793A6] hover:text-dark-brown',
                   )}
                   style={{ fontFamily: 'var(--font-poppins), sans-serif' }}
                 >
@@ -92,7 +137,7 @@ export const Header = () => {
           href={BRAND.playStoreUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden md:inline-flex items-center gap-1.5 gold-button h-10 px-5 rounded-xl text-sm"
+          className="hidden md:inline-flex items-center gap-1.5 gold-button lux-cta h-10 px-5 rounded-xl text-sm"
         >
           Get the App
         </Link>
@@ -112,7 +157,7 @@ export const Header = () => {
       {open && (
         <div className="relative z-10 md:hidden border-t border-gold/15"
              style={{
-               background: 'linear-gradient(180deg, rgba(255,252,245,0.96), rgba(251,248,242,0.94))',
+               background: 'linear-gradient(180deg, rgba(10,9,16,0.96), rgba(8,7,13,0.94))',
                backdropFilter: 'blur(24px) saturate(180%)',
                WebkitBackdropFilter: 'blur(24px) saturate(180%)',
              }}>
@@ -128,7 +173,7 @@ export const Header = () => {
                       'block px-3 py-2.5 rounded-lg text-sm font-bold',
                       active
                         ? 'text-dark-brown'
-                        : 'text-[#6B6B6B] hover:bg-gold/10 hover:text-dark-brown',
+                        : 'text-[#9793A6] hover:bg-gold/10 hover:text-dark-brown',
                     )}
                     style={{
                       fontFamily: 'var(--font-poppins), sans-serif',
@@ -161,5 +206,6 @@ export const Header = () => {
         </div>
       )}
     </header>
+    </>
   );
 };

@@ -1,10 +1,9 @@
 'use client';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// SMOKE TEST (revertible): golden WebGL smoke + gold dust for the home hero.
-// Desktop-only — renders nothing on touch / reduced-motion / narrow screens.
-// To revert: delete this file and undo the marked block in app/page.tsx, then
-// `npm uninstall three @react-three/fiber @types/three`.
+// Neon nebula — gold / teal / violet particle field + aurora ribbons, additive
+// glow on deep ink, cursor-reactive. Renders on all devices (respects reduced
+// motion). The hero's signature WebGL layer.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -19,154 +18,121 @@ function seededRandom(seed: number) {
   };
 }
 
-function createSoftDotTexture() {
+function softDot() {
   const size = 64;
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext('2d');
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d');
   if (!ctx) return null;
-
-  const gradient = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-  gradient.addColorStop(0, 'rgba(255,255,255,1)');
-  gradient.addColorStop(0.35, 'rgba(255,255,255,0.35)');
-  gradient.addColorStop(1, 'rgba(255,255,255,0)');
-  ctx.fillStyle = gradient;
+  const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+  g.addColorStop(0, 'rgba(255,255,255,1)');
+  g.addColorStop(0.4, 'rgba(255,255,255,0.4)');
+  g.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = g;
   ctx.fillRect(0, 0, size, size);
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.needsUpdate = true;
-  texture.minFilter = THREE.LinearFilter;
-  texture.magFilter = THREE.LinearFilter;
-  return texture;
+  const t = new THREE.CanvasTexture(c);
+  t.minFilter = t.magFilter = THREE.LinearFilter;
+  return t;
 }
 
-// Golden smoke body (was rose-red in the original).
-function createStructuredSmokeTexture(seed = 1) {
+function nebula(seed: number, rgb: string) {
   const rand = seededRandom(seed);
-  const size = 384;
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext('2d');
+  const size = 320;
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d');
   if (!ctx) return null;
-
-  ctx.clearRect(0, 0, size, size);
   ctx.translate(size / 2, size / 2);
-
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 6; i++) {
     ctx.save();
-    const angle = (rand() - 0.5) * Math.PI * 0.8;
-    const x = (rand() - 0.5) * size * 0.16;
-    const y = (rand() - 0.5) * size * 0.12;
-    const sx = 1.2 + rand() * 1.1;
-    const sy = 0.18 + rand() * 0.22;
-    const radius = size * (0.26 + rand() * 0.2);
-
-    ctx.translate(x, y);
-    ctx.rotate(angle);
-    ctx.scale(sx, sy);
-
-    const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, radius);
-    // Golden body — brightened additively so it reads as warm gold light.
-    gradient.addColorStop(0, 'rgba(215, 176, 95, 0.95)');
-    gradient.addColorStop(0.35, 'rgba(216, 178, 100, 0.60)');
-    gradient.addColorStop(0.7, 'rgba(168, 126, 30, 0.30)');
-    gradient.addColorStop(1, 'rgba(150, 110, 40, 0)');
-
-    ctx.fillStyle = gradient;
+    ctx.rotate((rand() - 0.5) * Math.PI);
+    ctx.scale(1.1 + rand() * 1.1, 0.2 + rand() * 0.22);
+    const r = size * (0.26 + rand() * 0.2);
+    const g = ctx.createRadialGradient(0, 0, 0, 0, 0, r);
+    g.addColorStop(0, `rgba(${rgb},0.85)`);
+    g.addColorStop(0.4, `rgba(${rgb},0.4)`);
+    g.addColorStop(1, `rgba(${rgb},0)`);
+    ctx.fillStyle = g;
     ctx.beginPath();
-    ctx.arc(0, 0, radius, 0, Math.PI * 2);
+    ctx.arc(0, 0, r, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
   }
-
-  ctx.save();
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-  for (let i = 0; i < 14; i++) {
-    const startX = -size * 0.32 + rand() * size * 0.64;
-    const startY = -size * 0.15 + rand() * size * 0.3;
-    const cp1x = startX + (rand() - 0.5) * size * 0.28;
-    const cp1y = startY + (rand() - 0.5) * size * 0.18;
-    const cp2x = startX + (rand() - 0.5) * size * 0.42;
-    const cp2y = startY + (rand() - 0.5) * size * 0.24;
-    const endX = startX + (rand() - 0.5) * size * 0.6;
-    const endY = startY + (rand() - 0.5) * size * 0.24;
-
-    ctx.strokeStyle = `rgba(216, 178, 100, ${0.02 + rand() * 0.05})`;
-    ctx.lineWidth = 3 + rand() * 10;
-    ctx.filter = `blur(${1.5 + rand() * 3.5}px)`;
-    ctx.beginPath();
-    ctx.moveTo(startX, startY);
-    ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endX, endY);
-    ctx.stroke();
-  }
-  ctx.restore();
-
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.globalCompositeOperation = 'destination-in';
   const fade = ctx.createRadialGradient(size / 2, size / 2, size * 0.05, size / 2, size / 2, size * 0.5);
   fade.addColorStop(0, 'rgba(0,0,0,1)');
-  fade.addColorStop(0.64, 'rgba(0,0,0,0.86)');
+  fade.addColorStop(0.65, 'rgba(0,0,0,0.8)');
   fade.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = fade;
   ctx.fillRect(0, 0, size, size);
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.needsUpdate = true;
-  texture.minFilter = THREE.LinearFilter;
-  texture.magFilter = THREE.LinearFilter;
-  texture.wrapS = THREE.ClampToEdgeWrapping;
-  texture.wrapT = THREE.ClampToEdgeWrapping;
-  return texture;
+  const t = new THREE.CanvasTexture(c);
+  t.minFilter = t.magFilter = THREE.LinearFilter;
+  return t;
 }
 
-function GoldDust({ texture, count = 32 }: { texture: THREE.Texture; count?: number }) {
-  const pointsRef = useRef<THREE.Points>(null);
+const PALETTE = ['232,201,122', '94,234,212', '167,139,250', '255,233,176'];
+const COLORS = PALETTE.map((p) => new THREE.Color(`rgb(${p})`));
+
+function NeonField({ texture, count }: { texture: THREE.Texture; count: number }) {
+  const ref = useRef<THREE.Points>(null);
+  const pointer = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      pointer.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
+      pointer.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    return () => window.removeEventListener('pointermove', onMove);
+  }, []);
 
   const data = useMemo(() => {
     const positions = new Float32Array(count * 3);
+    const colors = new Float32Array(count * 3);
     const speeds = new Float32Array(count);
-    const phases = new Float32Array(count);
     for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 16;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 9;
-      positions[i * 3 + 2] = -1.5 + Math.random() * 2.5;
-      speeds[i] = 0.004 + Math.random() * 0.007;
-      phases[i] = Math.random() * Math.PI * 2;
+      positions[i * 3] = (Math.random() - 0.5) * 18;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 11;
+      positions[i * 3 + 2] = -2 + Math.random() * 4;
+      const col = COLORS[Math.floor(Math.random() * COLORS.length)];
+      colors[i * 3] = col.r;
+      colors[i * 3 + 1] = col.g;
+      colors[i * 3 + 2] = col.b;
+      speeds[i] = 0.003 + Math.random() * 0.008;
     }
-    return { positions, speeds, phases };
+    return { positions, colors, speeds };
   }, [count]);
 
   useFrame((state) => {
-    const points = pointsRef.current;
-    if (!points) return;
-    const elapsed = state.clock.elapsedTime;
-    const positions = points.geometry.attributes.position.array as Float32Array;
+    const pts = ref.current;
+    if (!pts) return;
+    const t = state.clock.elapsedTime;
+    const arr = pts.geometry.attributes.position.array as Float32Array;
     for (let i = 0; i < count; i++) {
-      positions[i * 3 + 1] += data.speeds[i];
-      positions[i * 3] += Math.sin(elapsed * 0.25 + data.phases[i]) * 0.002;
-      if (positions[i * 3 + 1] > 4.7) {
-        positions[i * 3 + 1] = -4.7;
-        positions[i * 3] = (Math.random() - 0.5) * 16;
-      }
+      arr[i * 3 + 1] += data.speeds[i];
+      arr[i * 3] += Math.sin(t * 0.3 + i) * 0.0016;
+      if (arr[i * 3 + 1] > 5.6) arr[i * 3 + 1] = -5.6;
     }
-    points.geometry.attributes.position.needsUpdate = true;
+    pts.geometry.attributes.position.needsUpdate = true;
+    // parallax toward cursor
+    pts.rotation.y += ((pointer.current.x * 0.25 - pts.rotation.y) * 0.04);
+    pts.rotation.x += ((-pointer.current.y * 0.18 - pts.rotation.x) * 0.04);
   });
 
   return (
-    <points ref={pointsRef}>
+    <points ref={ref}>
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[data.positions, 3]} />
+        <bufferAttribute attach="attributes-color" args={[data.colors, 3]} />
       </bufferGeometry>
       <pointsMaterial
         map={texture}
-        transparent
-        size={0.075}
+        size={0.11}
         sizeAttenuation
-        color="#D7B05F"
-        opacity={0.25}
+        vertexColors
+        transparent
+        opacity={0.95}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
       />
@@ -174,132 +140,95 @@ function GoldDust({ texture, count = 32 }: { texture: THREE.Texture; count?: num
   );
 }
 
-function PremiumGoldenSmoke({ textures, count = 34 }: { textures: THREE.Texture[]; count?: number }) {
-  const groupRef = useRef<THREE.Group>(null);
-  const spriteRefs = useRef<THREE.Sprite[]>([]);
+function AuroraRibbons({ textures, count }: { textures: THREE.Texture[]; count: number }) {
+  const group = useRef<THREE.Group>(null);
+  const sprites = useRef<THREE.Sprite[]>([]);
   const { viewport } = useThree();
-
   const pointer = useRef({ x: 999, y: 999, active: false });
-  const smoothPointer = useRef({ x: 999, y: 999 });
+  const smooth = useRef({ x: 999, y: 999 });
 
   useEffect(() => {
-    const handlePointerMove = (event: PointerEvent) => {
-      pointer.current.x = (event.clientX / window.innerWidth - 0.5) * viewport.width;
-      pointer.current.y = -(event.clientY / window.innerHeight - 0.5) * viewport.height;
+    const onMove = (e: PointerEvent) => {
+      pointer.current.x = (e.clientX / window.innerWidth - 0.5) * viewport.width;
+      pointer.current.y = -(e.clientY / window.innerHeight - 0.5) * viewport.height;
       pointer.current.active = true;
     };
-    const handlePointerLeave = () => {
-      pointer.current.active = false;
-      pointer.current.x = 999;
-      pointer.current.y = 999;
-    };
-    window.addEventListener('pointermove', handlePointerMove, { passive: true });
-    window.addEventListener('pointerleave', handlePointerLeave);
-    return () => {
-      window.removeEventListener('pointermove', handlePointerMove);
-      window.removeEventListener('pointerleave', handlePointerLeave);
-    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    return () => window.removeEventListener('pointermove', onMove);
   }, [viewport.width, viewport.height]);
 
-  const smoke = useMemo(() => {
-    return Array.from({ length: count }).map((_, i) => {
-      const rand = seededRandom(i * 19 + 7);
-      return {
-        baseT: (i / count) * Math.PI * 2,
-        textureIndex: i % textures.length,
-        // Wider scatter so the haze fills the whole hero, not a central ribbon.
-        ribbonOffset: (rand() - 0.5) * 2.6,
-        verticalOffset: (rand() - 0.5) * 3.2,
-        depthOffset: (rand() - 0.5) * 2.8,
-        scale: 3.8 + rand() * 2.8,
-        // Tuned for additive blending (each sprite adds a little warm gold light).
-        opacity: 0.025 + rand() * 0.023,
-        rotation: rand() * Math.PI * 2,
-        rotationSpeed: (rand() - 0.5) * 0.0012,
-        pulse: rand() * Math.PI * 2,
-      };
-    });
-  }, [count, textures.length]);
+  const ribbons = useMemo(
+    () =>
+      Array.from({ length: count }).map((_, i) => {
+        const rand = seededRandom(i * 23 + 5);
+        return {
+          baseT: (i / count) * Math.PI * 2,
+          tex: i % textures.length,
+          ribbon: (rand() - 0.5) * 2.4,
+          vy: (rand() - 0.5) * 2.6,
+          depth: (rand() - 0.5) * 3,
+          scale: 3.4 + rand() * 2.8,
+          opacity: 0.1 + rand() * 0.12,
+          rot: rand() * Math.PI * 2,
+          rotSpeed: (rand() - 0.5) * 0.0014,
+          pulse: rand() * Math.PI * 2,
+        };
+      }),
+    [count, textures.length],
+  );
 
   useFrame((state) => {
-    const group = groupRef.current;
-    if (!group) return;
-    const time = state.clock.elapsedTime;
-
-    smoothPointer.current.x += (pointer.current.x - smoothPointer.current.x) * 0.08;
-    smoothPointer.current.y += (pointer.current.y - smoothPointer.current.y) * 0.08;
-
-    // Span (almost) the full hero width and height instead of a thin band.
-    const radiusX = viewport.width * 0.5;
-    const radiusY = viewport.height * 0.46;
-    const radiusZ = 2.4;
-    const repelRadius = 2.5;
-    const repelStrength = 1.25;
-
-    for (let i = 0; i < smoke.length; i++) {
-      const sprite = spriteRefs.current[i];
-      if (!sprite) continue;
-      const data = smoke[i];
-      const t = data.baseT + time * 0.12;
-
-      let x = Math.sin(t) * radiusX;
-      let y = Math.sin(t * 2) * radiusY;
-      const z = Math.cos(t) * radiusZ + data.depthOffset;
-
-      const tangentX = Math.cos(t);
-      const tangentY = Math.cos(t * 2) * 2;
-      const normalX = -tangentY;
-      const normalY = tangentX;
-      const normalLength = Math.sqrt(normalX * normalX + normalY * normalY) || 1;
-
-      const breathingOffset = data.ribbonOffset + Math.sin(time * 0.22 + data.baseT * 2) * 0.12;
-      x += (normalX / normalLength) * breathingOffset;
-      y += (normalY / normalLength) * breathingOffset + data.verticalOffset;
-
+    const g = group.current;
+    if (!g) return;
+    const t = state.clock.elapsedTime;
+    smooth.current.x += (pointer.current.x - smooth.current.x) * 0.08;
+    smooth.current.y += (pointer.current.y - smooth.current.y) * 0.08;
+    const rx = viewport.width * 0.42;
+    const ry = viewport.height * 0.36;
+    for (let i = 0; i < ribbons.length; i++) {
+      const sp = sprites.current[i];
+      if (!sp) continue;
+      const d = ribbons[i];
+      const tt = d.baseT + t * 0.1;
+      let x = Math.sin(tt) * rx;
+      let y = Math.sin(tt * 2) * ry + d.vy;
+      const z = Math.cos(tt) * 2 + d.depth;
+      x += d.ribbon + Math.sin(t * 0.2 + d.baseT) * 0.2;
       if (pointer.current.active) {
-        const dx = x - smoothPointer.current.x;
-        const dy = y - smoothPointer.current.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < repelRadius) {
-          const force = (1 - distance / repelRadius) * repelStrength;
-          const safeDistance = distance || 0.001;
-          x += (dx / safeDistance) * force;
-          y += (dy / safeDistance) * force;
+        const dx = x - smooth.current.x;
+        const dy = y - smooth.current.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 2.8) {
+          const f = (1 - dist / 2.8) * 1.5;
+          const sd = dist || 0.001;
+          x += (dx / sd) * f;
+          y += (dy / sd) * f;
         }
       }
-
-      sprite.position.set(x, y, z);
-
-      const breathe = 1 + Math.sin(time * 0.28 + data.pulse) * 0.055;
-      const finalScale = data.scale * breathe;
-      sprite.scale.set(finalScale * 1.55, finalScale * 0.78, 1);
-
-      const material = sprite.material as THREE.SpriteMaterial;
-      material.rotation =
-        data.rotation + time * data.rotationSpeed * 45 + Math.sin(time * 0.08 + data.pulse) * 0.045;
-      material.opacity = data.opacity * (0.94 + Math.sin(time * 0.18 + data.pulse) * 0.06);
+      sp.position.set(x, y, z);
+      const breathe = 1 + Math.sin(t * 0.3 + d.pulse) * 0.06;
+      sp.scale.set(d.scale * breathe * 1.5, d.scale * breathe * 0.8, 1);
+      const m = sp.material as THREE.SpriteMaterial;
+      m.rotation = d.rot + t * d.rotSpeed * 45;
+      m.opacity = d.opacity * (0.92 + Math.sin(t * 0.2 + d.pulse) * 0.08);
     }
-
-    group.rotation.x = Math.sin(time * 0.025) * 0.035;
-    group.rotation.y = Math.sin(time * 0.032) * 0.09;
-    group.rotation.z = Math.cos(time * 0.026) * 0.035;
+    g.rotation.z = Math.sin(t * 0.03) * 0.05;
   });
 
   return (
-    <group ref={groupRef}>
-      {smoke.map((s, i) => (
+    <group ref={group}>
+      {ribbons.map((r, i) => (
         <sprite
           key={i}
           ref={(el) => {
-            if (el) spriteRefs.current[i] = el;
+            if (el) sprites.current[i] = el;
           }}
-          scale={[s.scale, s.scale, 1]}
+          scale={[r.scale, r.scale, 1]}
         >
           <spriteMaterial
-            map={textures[s.textureIndex]}
-            color="#D7B05F"
+            map={textures[r.tex]}
             transparent
-            opacity={s.opacity}
+            opacity={r.opacity}
             depthWrite={false}
             depthTest={false}
             blending={THREE.AdditiveBlending}
@@ -312,45 +241,41 @@ function PremiumGoldenSmoke({ textures, count = 34 }: { textures: THREE.Texture[
 
 export default function HeroParticles() {
   const [enabled, setEnabled] = useState(false);
-  const [smokeTextures, setSmokeTextures] = useState<THREE.Texture[] | null>(null);
-  const [dustTexture, setDustTexture] = useState<THREE.Texture | null>(null);
+  const [tex, setTex] = useState<{ dot: THREE.Texture; ribbons: THREE.Texture[] } | null>(null);
 
-  // Desktop-only gate: mouse pointer, motion allowed, wide enough screen.
   useEffect(() => {
-    const ok =
-      window.matchMedia('(pointer: fine)').matches &&
-      !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
-      window.innerWidth >= 768;
-    setEnabled(ok);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    setEnabled(true);
   }, []);
 
   useEffect(() => {
     if (!enabled) return;
-    const createdSmoke = [
-      createStructuredSmokeTexture(3),
-      createStructuredSmokeTexture(12),
-      createStructuredSmokeTexture(25),
+    const dot = softDot();
+    const ribbons = [
+      nebula(3, '232,201,122'),
+      nebula(9, '94,234,212'),
+      nebula(17, '167,139,250'),
     ].filter(Boolean) as THREE.Texture[];
-    const createdDust = createSoftDotTexture();
-    setSmokeTextures(createdSmoke);
-    setDustTexture(createdDust);
+    if (dot) setTex({ dot, ribbons });
     return () => {
-      createdSmoke.forEach((t) => t.dispose());
-      createdDust?.dispose();
+      dot?.dispose();
+      ribbons.forEach((t) => t.dispose());
     };
   }, [enabled]);
 
-  if (!enabled || !smokeTextures || !dustTexture) return null;
+  if (!enabled || !tex) return null;
+
+  const mobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   return (
     <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden' }}>
       <Canvas
-        dpr={[1, 1.25]}
+        dpr={[1, 1.5]}
         gl={{ alpha: true, antialias: false, powerPreference: 'high-performance' }}
-        camera={{ position: [0, 0, 10], fov: 42, near: 0.1, far: 100 }}
+        camera={{ position: [0, 0, 10], fov: 44, near: 0.1, far: 100 }}
       >
-        <PremiumGoldenSmoke textures={smokeTextures} count={44} />
-        <GoldDust texture={dustTexture} count={40} />
+        <NeonField texture={tex.dot} count={mobile ? 90 : 150} />
+        <AuroraRibbons textures={tex.ribbons} count={mobile ? 16 : 26} />
       </Canvas>
     </div>
   );

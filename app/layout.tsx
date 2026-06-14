@@ -3,7 +3,7 @@ import { Jost, Poppins, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { CursorGlow } from '@/components/CursorGlow';
+import SplashCursor from '@/components/SplashCursor';
 import { BRAND } from '@/lib/brand';
 
 // Display / headings — geometric sans (matches the app's heading font)
@@ -133,8 +133,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {/* Cursor-following gold glow — site-wide, self-disables on touch */}
-        <CursorGlow />
+        {/* WebGL gold "splash" fluid that trails the cursor. Sits at z-0 behind
+            the content so it glows through the translucent section surfaces and
+            fills the hero; desktop/fine-pointer only, off under reduced motion. */}
+        <SplashCursor />
         {/* Ivory Gold signature: drifting gold-dust field behind everything.
             Content sits in the z-1 .gm-content wrapper; section surfaces are
             slightly translucent so the dust shimmers through. */}

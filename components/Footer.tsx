@@ -31,7 +31,7 @@ export const Footer = () => {
         aria-current={active ? 'page' : undefined}
         className={cn(
           'footer-link inline-block text-sm hover:text-gold',
-          active ? 'is-active text-dark-brown font-bold' : 'text-[#6B6B6B]',
+          active ? 'is-active text-dark-brown font-bold' : 'text-[#9793A6]',
         )}
       >
         {children}
@@ -84,7 +84,7 @@ export const Footer = () => {
                   href={BRAND.playStoreUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="footer-link inline-block text-sm text-[#6B6B6B] hover:text-gold"
+                  className="footer-link inline-block text-sm text-[#9793A6] hover:text-gold"
                 >
                   Download
                 </a>

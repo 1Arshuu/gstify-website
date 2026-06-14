@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { Reveal } from '@/components/Reveal';
 import { SectionHeading } from '@/components/SectionHeading';
+import { SpotlightCard } from '@/components/SpotlightCard';
 
 const features = [
   { icon: Receipt,      title: '5 Document Types',         body: 'Tax Invoice, Delivery Challan, Proforma, Quotation, POS Bill — each with its own number sequence.' },
@@ -30,27 +31,37 @@ const features = [
   { icon: Lock,         title: 'Biometric Lock',           body: 'Optional fingerprint / face unlock at launch. Your invoice data stays locked when your phone is.' },
 ];
 
+const MUTED = '#9793A6';
+
 export default function Features() {
   return (
-    <div className="hero-bg noise-overlay">
-      <section className="container mx-auto px-3 sm:px-6 max-w-6xl pt-20 sm:pt-24 pb-20 sm:pb-28">
+    <div className="hero-bg noise-overlay relative overflow-hidden">
+      <div aria-hidden className="neon-grid" />
+      <div aria-hidden className="aurora-orb -top-32 right-0 w-[560px] h-[560px] opacity-35"
+           style={{ background: 'radial-gradient(circle, rgba(94,234,212,0.4), transparent 70%)', position: 'absolute' }} />
+      <div aria-hidden className="aurora-orb top-1/3 -left-40 w-[520px] h-[520px] opacity-30"
+           style={{ background: 'radial-gradient(circle, rgba(232,201,122,0.4), transparent 70%)', position: 'absolute' }} />
+
+      <section className="container mx-auto px-3 sm:px-6 max-w-6xl pt-20 sm:pt-28 pb-20 sm:pb-28 relative z-10">
         <SectionHeading
           eyebrow="Features"
-          title={<>Everything an Indian SMB <span className="gradient-text italic">needs to bill.</span></>}
-          body="The features that used to require a desktop accounting suite — packed into a phone you already carry."
+          title={<>Everything an Indian SMB <span className="gradient-text glow-text italic">needs to bill.</span></>}
+          body="The features that used to require a desktop accounting suite — packed into the phone you already carry."
         />
 
-        <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-5 grid-3d">
           {features.map((f, i) => (
-            <Reveal key={f.title} delay={(i % 6) * 50}
-                    className="lux-card rounded-2xl p-6 hover:-translate-y-1 transition-transform duration-300 group">
-              <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl gold-gradient mb-4 shadow-[0_4px_14px_rgba(168,126,30,0.30)] group-hover:shadow-[0_8px_22px_rgba(168,126,30,0.45)] transition-shadow">
-                <f.icon className="h-6 w-6 text-dark-brown" strokeWidth={2.4} />
-              </span>
-              <h3 className="font-display text-lg font-extrabold text-dark-brown mb-1.5" style={{ letterSpacing: '-0.02em' }}>
-                {f.title}
-              </h3>
-              <p className="text-[14px] text-gold-dim leading-relaxed">{f.body}</p>
+            <Reveal key={f.title} delay={(i % 6) * 50}>
+              <SpotlightCard className="app-card app-card-hover rounded-2xl p-6 h-full group">
+                <span className="tilt-layer inline-flex items-center justify-center w-12 h-12 rounded-xl gold-gradient text-[#1A1205] mb-4"
+                      style={{ boxShadow: '0 0 22px rgba(232,201,122,0.5), inset 0 1px 0 rgba(255,255,255,0.5)' }}>
+                  <f.icon className="h-6 w-6" strokeWidth={2.4} />
+                </span>
+                <h3 className="font-display text-lg font-extrabold text-dark-brown mb-1.5" style={{ letterSpacing: '-0.01em' }}>
+                  {f.title}
+                </h3>
+                <p className="text-[14px] leading-relaxed" style={{ color: MUTED }}>{f.body}</p>
+              </SpotlightCard>
             </Reveal>
           ))}
         </div>

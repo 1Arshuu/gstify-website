@@ -1,5 +1,5 @@
 'use client';
-import { Check, X, Download, Crown, Briefcase, Sparkles, CloudUpload, AlertTriangle } from 'lucide-react';
+import { Check, X, Download, Crown, Briefcase, Sparkles, CloudUpload, AlertTriangle, Package } from 'lucide-react';
 import { BRAND } from '@/lib/brand';
 import { Reveal } from '@/components/Reveal';
 import { SectionHeading } from '@/components/SectionHeading';
@@ -72,7 +72,7 @@ export default function Pricing() {
             <Reveal key={plan.id} delay={i * 80}
               className={`${plan.highlight ? 'gold-border' : 'lux-card'} rounded-3xl p-8 relative flex flex-col ${plan.highlight ? 'lg:scale-105 lg:-my-2' : ''}`}>
               {plan.highlight && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 gold-gradient text-dark-brown text-[10px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full shadow"
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 gold-gradient text-[#1A1205] text-[10px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full shadow"
                       style={{ letterSpacing: '0.14em' }}>
                   Most Popular
                 </span>
@@ -120,14 +120,14 @@ export default function Pricing() {
                }}>
             <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl flex-shrink-0"
                   style={{ background: 'linear-gradient(135deg,#D7B05F,#B98A2E,#A87E1E)', boxShadow: '0 4px 12px rgba(168,126,30,0.35)' }}>
-              <CloudUpload className="h-5 w-5 text-dark-brown" strokeWidth={2.4} />
+              <CloudUpload className="h-5 w-5 text-[#1A1205]" strokeWidth={2.4} />
             </span>
             <div>
               <p className="font-display text-lg font-extrabold text-dark-brown flex items-center gap-2" style={{ letterSpacing: '-0.02em' }}>
-                <AlertTriangle className="h-4 w-4 text-amber-600" strokeWidth={2.6} />
+                <AlertTriangle className="h-4 w-4 text-amber-400" strokeWidth={2.6} />
                 Free users: connect Google Drive
               </p>
-              <p className="mt-1.5 text-[14px] leading-relaxed" style={{ color: '#6B6B6B' }}>
+              <p className="mt-1.5 text-[14px] leading-relaxed" style={{ color: '#9793A6' }}>
                 On the Free plan your data is stored locally on your device. If the app is uninstalled,
                 the device is lost, or app data is cleared, that data <strong>cannot be recovered</strong> unless
                 you have connected Google Drive backup. We strongly recommend connecting Drive right after your
@@ -143,18 +143,42 @@ export default function Pricing() {
           <div className="rounded-2xl p-5 sm:p-6 flex items-start gap-4 lux-card-soft">
             <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl flex-shrink-0"
                   style={{ background: 'linear-gradient(135deg,#D7B05F,#B98A2E,#A87E1E)', boxShadow: '0 4px 12px rgba(168,126,30,0.35)' }}>
-              <Crown className="h-5 w-5 text-dark-brown" strokeWidth={2.4} />
+              <Crown className="h-5 w-5 text-[#1A1205]" strokeWidth={2.4} />
             </span>
             <div>
               <p className="font-display text-lg font-extrabold text-dark-brown" style={{ letterSpacing: '-0.02em' }}>
                 Upgrading? Your data comes with you
               </p>
-              <p className="mt-1.5 text-[14px] leading-relaxed" style={{ color: '#6B6B6B' }}>
+              <p className="mt-1.5 text-[14px] leading-relaxed" style={{ color: '#9793A6' }}>
                 The moment you move from Free to Pro or Business, every invoice, customer, product,
                 payment and expense on your device is <strong>uploaded to the cloud automatically</strong> —
                 nothing to export, nothing lost, and from then on your data syncs across all your devices.
               </p>
             </div>
+          </div>
+        </Reveal>
+
+        {/* Business perk — direct .apk download (sideload) */}
+        <Reveal className="mt-4 max-w-3xl mx-auto">
+          <div className="rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 app-card">
+            <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl flex-shrink-0 gold-gradient text-[#1A1205]"
+                  style={{ boxShadow: '0 0 24px rgba(232,201,122,0.5)' }}>
+              <Package className="h-5 w-5" strokeWidth={2.4} />
+            </span>
+            <div className="flex-1">
+              <p className="font-display text-lg font-extrabold text-dark-brown flex items-center gap-2" style={{ letterSpacing: '-0.01em' }}>
+                Get the GSTify .apk <span className="chip-teal">Business</span>
+              </p>
+              <p className="mt-1.5 text-[14px] leading-relaxed" style={{ color: '#9793A6' }}>
+                Business subscribers can download the packaged GSTify <strong>.apk</strong> to sideload on
+                managed or Play-restricted devices — the same app, installed your way.
+              </p>
+            </div>
+            <a href={BRAND.playStoreUrl} target="_blank" rel="noopener noreferrer"
+               className="gold-button rounded-xl px-6 inline-flex items-center justify-center gap-2 text-[14px] whitespace-nowrap"
+               style={{ height: '48px' }}>
+              <Download className="h-4 w-4" strokeWidth={2.8} /> Unlock with Business
+            </a>
           </div>
         </Reveal>
 
@@ -183,7 +207,7 @@ export default function Pricing() {
                    style={{ letterSpacing: '0.14em' }}>
                   {f.q}
                 </p>
-                <p className="text-sm leading-relaxed" style={{ color: '#6B6B6B' }}>{f.a}</p>
+                <p className="text-sm leading-relaxed" style={{ color: '#9793A6' }}>{f.a}</p>
               </Reveal>
             ))}
           </div>

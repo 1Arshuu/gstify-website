@@ -8,8 +8,10 @@ export const metadata = {
 
 export default function Terms() {
   return (
-    <div className="hero-bg">
-      <article className="container mx-auto px-3 sm:px-6 max-w-3xl py-16 sm:py-20 legal-prose">
+    <div className="hero-bg noise-overlay relative overflow-hidden">
+      <div aria-hidden className="aurora-orb -top-24 -right-24 w-[460px] h-[460px] opacity-25"
+           style={{ background: 'radial-gradient(circle, rgba(94,234,212,0.4), transparent 70%)', position: 'absolute' }} />
+      <article className="container mx-auto px-3 sm:px-6 max-w-3xl py-16 sm:py-20 legal-prose relative z-10">
         <p className="text-[11px] font-extrabold uppercase tracking-wider text-gold-dim mb-2" style={{ letterSpacing: '0.14em' }}>
           Legal
         </p>
