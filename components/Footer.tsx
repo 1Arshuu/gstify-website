@@ -79,6 +79,7 @@ export const Footer = () => {
             <ul className="space-y-2.5">
               <li><FootLink href="/features">Features</FootLink></li>
               <li><FootLink href="/pricing">Pricing</FootLink></li>
+              <li><FootLink href="/blog">Blog</FootLink></li>
               <li>
                 <a
                   href={BRAND.playStoreUrl}
