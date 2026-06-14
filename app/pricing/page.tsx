@@ -2,6 +2,7 @@
 import { Check, X, Download, Crown, Briefcase, Sparkles, CloudUpload, AlertTriangle, Package } from 'lucide-react';
 import { BRAND } from '@/lib/brand';
 import { Reveal } from '@/components/Reveal';
+import { Section } from '@/components/Section';
 import { SectionHeading } from '@/components/SectionHeading';
 
 const plans = [
@@ -59,8 +60,8 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <div className="hero-bg noise-overlay">
-      <section className="container mx-auto px-3 sm:px-6 max-w-6xl pt-20 sm:pt-24 pb-20 sm:pb-28">
+    <>
+      <Section tone="base" grid>
         <SectionHeading
           eyebrow="Pricing"
           title={<>Start free. Upgrade <span className="gradient-text italic">when you grow.</span></>}
@@ -185,11 +186,10 @@ export default function Pricing() {
         <p className="text-center text-xs text-gold-dim mt-10 max-w-xl mx-auto leading-relaxed">
           Prices in INR. Pro and Business plans are billed through Google Play. Cancel any time from your Google Play subscriptions.
         </p>
-      </section>
+      </Section>
 
       {/* FAQ-style mini section */}
-      <section className="surface-warm noise-overlay py-20">
-        <div className="container mx-auto px-3 sm:px-6 max-w-3xl">
+      <Section tone="warm" containerClassName="max-w-3xl">
           <SectionHeading
             eyebrow="No surprises"
             title={<>Honest pricing. <span className="gradient-text italic">No tricks.</span></>}
@@ -211,8 +211,7 @@ export default function Pricing() {
               </Reveal>
             ))}
           </div>
-        </div>
-      </section>
-    </div>
+      </Section>
+    </>
   );
 }

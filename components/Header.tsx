@@ -3,15 +3,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Home, LayoutGrid, IndianRupee, LifeBuoy } from 'lucide-react';
 import { BRAND } from '@/lib/brand';
 import { cn } from '@/lib/utils';
 
 const links = [
-  { href: '/',         label: 'Home' },
-  { href: '/features', label: 'Features' },
-  { href: '/pricing',  label: 'Pricing' },
-  { href: '/support',  label: 'Support' },
+  { href: '/',         label: 'Home',     icon: Home },
+  { href: '/features', label: 'Features', icon: LayoutGrid },
+  { href: '/pricing',  label: 'Pricing',  icon: IndianRupee },
+  { href: '/support',  label: 'Support',  icon: LifeBuoy },
 ];
 
 export const Header = () => {
@@ -98,34 +98,38 @@ export const Header = () => {
           </span>
         </Link>
 
-        {/* Desktop links */}
+        {/* Desktop nav — icon expands on hover to reveal the page name beside it */}
         <ul className="hidden md:flex items-center gap-1">
           {links.map((l) => {
             const active = isActive(l.href);
+            const Icon = l.icon;
             return (
               <li key={l.href}>
                 <Link
                   href={l.href}
+                  aria-label={l.label}
                   className={cn(
-                    'nav-underline relative inline-flex items-center px-4 py-2 rounded-full text-sm font-bold transition-colors',
-                    active ? 'text-dark-brown' : 'text-[#9793A6] hover:text-dark-brown',
+                    'group relative inline-flex items-center h-10 px-2.5 rounded-xl transition-all duration-300',
+                    active ? 'text-gold' : 'text-[#9793A6] hover:text-gold hover:bg-white/[0.05]',
                   )}
-                  style={{ fontFamily: 'var(--font-poppins), sans-serif' }}
+                  style={active ? {
+                    background: 'linear-gradient(180deg, rgba(232,201,122,0.18), rgba(94,234,212,0.08))',
+                    border: '1px solid rgba(232,201,122,0.35)',
+                    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.10), 0 0 16px -6px rgba(232,201,122,0.6)',
+                  } : undefined}
                 >
-                  {active && (
-                    <span
-                      aria-hidden
-                      className="absolute inset-0 rounded-full"
-                      style={{
-                        background: 'linear-gradient(180deg, rgba(215,176,95,0.28), rgba(168,126,30,0.16))',
-                        border: '1.5px solid rgba(168,126,30,0.40)',
-                        boxShadow:
-                          'inset 0 1px 0 rgba(255,255,255,0.85), 0 3px 10px -3px rgba(168,126,30,0.35)',
-                        zIndex: 0,
-                      }}
-                    />
-                  )}
-                  <span className="relative z-10">{l.label}</span>
+                  <Icon className="h-[18px] w-[18px] shrink-0" strokeWidth={2.3} />
+                  <span
+                    className={cn(
+                      'overflow-hidden whitespace-nowrap font-bold text-[13px] transition-all duration-300 ease-out',
+                      active
+                        ? 'max-w-[140px] opacity-100 ml-2'
+                        : 'max-w-0 opacity-0 group-hover:max-w-[140px] group-hover:opacity-100 group-hover:ml-2',
+                    )}
+                    style={{ fontFamily: 'var(--font-poppins), sans-serif' }}
+                  >
+                    {l.label}
+                  </span>
                 </Link>
               </li>
             );
@@ -164,13 +168,14 @@ export const Header = () => {
           <ul className="container mx-auto px-3 max-w-6xl py-4 space-y-1">
             {links.map((l) => {
               const active = isActive(l.href);
+              const Icon = l.icon;
               return (
                 <li key={l.href}>
                   <Link
                     href={l.href}
                     onClick={() => setOpen(false)}
                     className={cn(
-                      'block px-3 py-2.5 rounded-lg text-sm font-bold',
+                      'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-bold',
                       active
                         ? 'text-dark-brown'
                         : 'text-[#9793A6] hover:bg-gold/10 hover:text-dark-brown',
@@ -186,6 +191,7 @@ export const Header = () => {
                         : undefined,
                     }}
                   >
+                    <Icon className={cn('h-4 w-4', active ? 'text-gold' : '')} strokeWidth={2.2} />
                     {l.label}
                   </Link>
                 </li>

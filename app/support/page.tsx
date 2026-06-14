@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion';
 import { Mail, MessageSquare, HelpCircle, ExternalLink, Sparkles } from 'lucide-react';
 import { BRAND } from '@/lib/brand';
+import { Section } from '@/components/Section';
 import { SpotlightCard } from '@/components/SpotlightCard';
 
 const MUTED = '#9793A6';
@@ -19,12 +20,7 @@ const faq = [
 
 export default function Support() {
   return (
-    <div className="hero-bg noise-overlay relative overflow-hidden">
-      <div aria-hidden className="neon-grid" />
-      <div aria-hidden className="aurora-orb -top-32 left-1/2 -translate-x-1/2 w-[640px] h-[520px] opacity-30"
-           style={{ background: 'radial-gradient(circle, rgba(232,201,122,0.4), transparent 70%)', position: 'absolute' }} />
-
-      <section className="container mx-auto px-3 sm:px-6 max-w-3xl py-16 sm:py-24 relative z-10">
+    <Section tone="base" glow="gold" containerClassName="max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
           className="text-center mb-12"
@@ -82,7 +78,6 @@ export default function Support() {
             </motion.details>
           ))}
         </div>
-      </section>
-    </div>
+    </Section>
   );
 }

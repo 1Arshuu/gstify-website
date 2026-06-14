@@ -5,6 +5,7 @@ import {
   Repeat, Wallet, FileMinus, Scale, FileSpreadsheet, ShoppingBag, ArrowUpCircle,
 } from 'lucide-react';
 import { Reveal } from '@/components/Reveal';
+import { Section } from '@/components/Section';
 import { SectionHeading } from '@/components/SectionHeading';
 import { SpotlightCard } from '@/components/SpotlightCard';
 
@@ -35,14 +36,7 @@ const MUTED = '#9793A6';
 
 export default function Features() {
   return (
-    <div className="hero-bg noise-overlay relative overflow-hidden">
-      <div aria-hidden className="neon-grid" />
-      <div aria-hidden className="aurora-orb -top-32 right-0 w-[560px] h-[560px] opacity-35"
-           style={{ background: 'radial-gradient(circle, rgba(94,234,212,0.4), transparent 70%)', position: 'absolute' }} />
-      <div aria-hidden className="aurora-orb top-1/3 -left-40 w-[520px] h-[520px] opacity-30"
-           style={{ background: 'radial-gradient(circle, rgba(232,201,122,0.4), transparent 70%)', position: 'absolute' }} />
-
-      <section className="container mx-auto px-3 sm:px-6 max-w-6xl pt-20 sm:pt-28 pb-20 sm:pb-28 relative z-10">
+    <Section tone="base" grid glow="teal" size="loose">
         <SectionHeading
           eyebrow="Features"
           title={<>Everything an Indian SMB <span className="gradient-text glow-text italic">needs to bill.</span></>}
@@ -65,7 +59,6 @@ export default function Features() {
             </Reveal>
           ))}
         </div>
-      </section>
-    </div>
+    </Section>
   );
 }

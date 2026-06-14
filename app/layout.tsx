@@ -33,22 +33,26 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(BRAND.url),
   title: {
-    default:  `${BRAND.name} — ${BRAND.tagline}`,
+    default:  'GSTify — Free GST Billing & Invoice App for India',
     template: `%s · ${BRAND.name}`,
   },
   description:
-    'Create GST invoices, delivery challans, quotations and POS bills in seconds. ' +
-    'Track payments, auto-backup to Google Drive, works offline. Built for Indian SMBs.',
+    'GSTify is a free GST billing and invoicing app for Indian small businesses. Create GST invoices, ' +
+    'delivery challans, proforma, quotations and POS bills, track customer payments, and back up to ' +
+    'Google Drive — offline-first, on Android.',
   keywords: [
     'GST billing app',
-    'GST invoice generator',
-    'India GST',
-    'small business billing',
-    'invoice app India',
+    'GST invoice app',
+    'free GST billing software',
+    'GST invoice generator India',
+    'invoice maker app',
+    'billing app for small business',
     'POS billing app',
-    'delivery challan',
-    'GSTR',
-    'free GST app',
+    'delivery challan app',
+    'quotation maker',
+    'GST software for small business',
+    'invoice app India',
+    'mobile billing app',
   ],
   authors: [{ name: BRAND.name }],
   creator: BRAND.name,
@@ -58,8 +62,8 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
   // OG/Twitter images come from app/opengraph-image.tsx (generated at build).
   openGraph: {
-    title:       `${BRAND.name} — ${BRAND.tagline}`,
-    description: 'GST invoices in 5 seconds. Right from your phone. Offline-first. Built for Indian SMBs.',
+    title:       'GSTify — Free GST Billing & Invoice App for India',
+    description: 'Create GST invoices, challans, quotations & POS bills on Android. Track payments, back up to Drive, work offline. Free for Indian SMBs.',
     url:         BRAND.url,
     siteName:    BRAND.name,
     locale:      'en_IN',
@@ -67,8 +71,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card:        'summary_large_image',
-    title:       `${BRAND.name} — ${BRAND.tagline}`,
-    description: 'GST invoices in 5 seconds. Offline-first. Built for Indian SMBs.',
+    title:       'GSTify — Free GST Billing & Invoice App for India',
+    description: 'GST invoices, challans, quotations & POS bills on Android. Offline-first, free to start. Built for Indian SMBs.',
   },
   robots: {
     index: true, follow: true,
@@ -113,13 +117,29 @@ const jsonLd = {
       operatingSystem: 'Android',
       applicationCategory: 'BusinessApplication',
       description:
-        'Create GST invoices, delivery challans, quotations and POS bills in seconds. ' +
-        'Track payments, auto-backup to Google Drive, works offline.',
+        'Free GST billing and invoicing app for Indian SMBs. Create GST invoices, delivery challans, ' +
+        'proforma, quotations and POS bills, track payments, and back up to Google Drive — offline-first.',
       url: BRAND.url,
       downloadUrl: BRAND.playStoreUrl,
       installUrl: BRAND.playStoreUrl,
       publisher: { '@id': `${BRAND.url}/#organization` },
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' },
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${BRAND.url}/#faq`,
+      mainEntity: [
+        { q: 'Is GSTify really free?', a: 'Yes. The Free plan gives you 50 GST invoices a month, 50 customers and 30 products with no credit card and no trial countdown. Upgrade to Pro (₹199/month) only when you outgrow it.' },
+        { q: 'Does GSTify work offline?', a: 'Yes. You can create invoices, add customers and record payments with no internet. Everything syncs automatically the moment you reconnect.' },
+        { q: 'How does backup work?', a: 'Connect Google Drive once and GSTify stores backup snapshots in your own Drive appData folder, which only GSTify can read. Restore on any device in one tap.' },
+        { q: 'Which documents can GSTify create?', a: 'Tax Invoice, Delivery Challan, Proforma, Quotation and POS Cash Memo — all GST-compliant, with five PDF templates.' },
+        { q: 'Can I cancel anytime?', a: 'Yes. Pro and Business are billed through Google Play, so you can cancel from your Google Play subscriptions whenever you like.' },
+        { q: 'Is my data secure?', a: 'Your data is encrypted in transit and at rest, backups go to your own Google Drive, and we never see your invoice contents.' },
+      ].map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
     },
   ],
 };
