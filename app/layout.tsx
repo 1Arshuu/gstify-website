@@ -1,14 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 import { Jost, Poppins, JetBrains_Mono } from 'next/font/google';
-import dynamic from 'next/dynamic';
 import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import SplashCursorLoader from '@/components/SplashCursorLoader';
 import { BRAND } from '@/lib/brand';
-
-// Defer the 640-line WebGL fluid simulation past initial hydration so it
-// doesn't block the critical JS path. Desktop/fine-pointer only anyway.
-const SplashCursor = dynamic(() => import('@/components/SplashCursor'), { ssr: false });
 
 // Display / headings — geometric sans (matches the app's heading font)
 const jost = Jost({
@@ -161,7 +157,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* WebGL gold "splash" fluid that trails the cursor. Sits at z-0 behind
             the content so it glows through the translucent section surfaces and
             fills the hero; desktop/fine-pointer only, off under reduced motion. */}
-        <SplashCursor />
+        <SplashCursorLoader />
         {/* Ivory Gold signature: drifting gold-dust field behind everything.
             Content sits in the z-1 .gm-content wrapper; section surfaces are
             slightly translucent so the dust shimmers through. */}
