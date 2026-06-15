@@ -1,10 +1,14 @@
 import type { Metadata, Viewport } from 'next';
 import { Jost, Poppins, JetBrains_Mono } from 'next/font/google';
+import dynamic from 'next/dynamic';
 import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import SplashCursor from '@/components/SplashCursor';
 import { BRAND } from '@/lib/brand';
+
+// Defer the 640-line WebGL fluid simulation past initial hydration so it
+// doesn't block the critical JS path. Desktop/fine-pointer only anyway.
+const SplashCursor = dynamic(() => import('@/components/SplashCursor'), { ssr: false });
 
 // Display / headings — geometric sans (matches the app's heading font)
 const jost = Jost({
@@ -15,19 +19,20 @@ const jost = Jost({
   display:  'swap',
 });
 
-// Body / UI — rounded humanist sans (matches the app's body font)
+// Body / UI — rounded humanist sans. 4 weights only (light + extrabold not used).
 const poppins = Poppins({
   subsets: ['latin'],
   variable: '--font-poppins',
-  weight:   ['300', '400', '500', '600', '700', '800'],
-  style:    ['normal', 'italic'],
+  weight:   ['400', '500', '600', '700'],
+  style:    ['normal'],
   display:  'swap',
 });
 
+// Mono used rarely (code snippets only) — optional so it never blocks rendering.
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-jetbrains-mono',
-  display:  'swap',
+  display:  'optional',
 });
 
 export const metadata: Metadata = {

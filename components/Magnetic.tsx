@@ -17,6 +17,10 @@ export function Magnetic({
 }) {
   const ref = useRef<HTMLSpanElement>(null);
 
+  const onEnter = () => {
+    if (ref.current) ref.current.style.willChange = 'transform';
+  };
+
   const onMove = (e: MouseEvent<HTMLSpanElement>) => {
     const el = ref.current;
     if (!el) return;
@@ -28,16 +32,19 @@ export function Magnetic({
 
   const onLeave = () => {
     const el = ref.current;
-    if (el) el.style.transform = 'translate(0px, 0px)';
+    if (!el) return;
+    el.style.transform = 'translate(0px, 0px)';
+    el.style.willChange = 'auto';
   };
 
   return (
     <span
       ref={ref}
+      onMouseEnter={onEnter}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       className={className}
-      style={{ display: 'inline-flex', transition: 'transform 0.3s cubic-bezier(0.22,1,0.36,1)', willChange: 'transform' }}
+      style={{ display: 'inline-flex', transition: 'transform 0.3s cubic-bezier(0.22,1,0.36,1)' }}
     >
       {children}
     </span>

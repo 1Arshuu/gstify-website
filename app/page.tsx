@@ -78,8 +78,8 @@ export default function Home() {
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
             <motion.div
-              initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 1, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="lg:col-span-7 text-center lg:text-left"
             >
               <span className="chip">
