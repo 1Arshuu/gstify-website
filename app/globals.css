@@ -614,7 +614,7 @@ body {
   .hscroll-outer.is-hscroll { height: calc(var(--panels, 4) * 100vh); }
   .is-hscroll .hscroll-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; }
   .is-hscroll .hscroll-track  { display: flex; flex-wrap: nowrap; width: max-content; height: 100%; will-change: transform; }
-  .is-hscroll .hscroll-panel  { flex: 0 0 100vw; height: 100vh; display: flex; }
+  .is-hscroll .hscroll-panel  { flex: 0 0 100vw; height: 100vh; overflow: hidden; }
 }
 
 /* ── Mobile hero document-stack: gentle staggered float ─────────────────── */

@@ -188,7 +188,7 @@ export default function Home() {
       {/* ═══ HORIZONTAL-SCROLL BAND · Free-vs-Pro → Final CTA (desktop) ═══ */}
       <HorizontalScroll>
       {/* ════════════════════════ FREE vs PRO ════════════════════════ */}
-      <Section tone="base" grid size="tight" className="lg:min-h-screen lg:flex lg:flex-col lg:justify-center">
+      <Section tone="base" grid size="tight" className="lg:min-h-screen lg:flex lg:flex-col lg:items-center lg:justify-center">
         <SectionHeading
           eyebrow="Free vs Pro"
           title={<>Start free. <span className="gradient-text italic">Scale when ready.</span></>}
@@ -216,7 +216,7 @@ export default function Home() {
       </Section>
 
       {/* ════════════════════════ FAQ ════════════════════════ */}
-      <Section tone="warm" size="tight" className="lg:min-h-screen lg:flex lg:flex-col lg:justify-center">
+      <Section tone="warm" size="tight" className="lg:min-h-screen lg:flex lg:flex-col lg:items-center lg:justify-center">
         <SectionHeading eyebrow="Questions?" title={<>Everything you <span className="gradient-text italic">want to know.</span></>} />
         <div className="mt-12 max-w-3xl mx-auto space-y-3">
           {faq.map((f, i) => (
@@ -235,7 +235,7 @@ export default function Home() {
       </Section>
 
       {/* ════════════════════════ PRICING CTA ════════════════════════ */}
-      <Section tone="base" size="tight" className="lg:min-h-screen lg:flex lg:flex-col lg:justify-center">
+      <Section tone="base" size="tight" className="lg:min-h-screen lg:flex lg:flex-col lg:items-center lg:justify-center">
         <Reveal>
           <div className="banner-bg gold-border noise-overlay rounded-3xl p-8 sm:p-12 lg:p-16 text-center relative overflow-hidden">
             <div aria-hidden className="cta-aurora" />
@@ -267,7 +267,7 @@ export default function Home() {
       </Section>
 
       {/* ════════════════════════ FINAL CTA ════════════════════════ */}
-      <Section tone="warm" shapes size="tight" className="lg:min-h-screen lg:flex lg:flex-col lg:justify-center" containerClassName="max-w-4xl">
+      <Section tone="warm" shapes size="tight" className="lg:min-h-screen lg:flex lg:flex-col lg:items-center lg:justify-center" containerClassName="max-w-4xl">
         <Reveal>
           <div className="cta-cream p-10 sm:p-14 lg:p-16 text-center">
             <div aria-hidden className="cta-aurora" />

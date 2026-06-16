@@ -20,11 +20,11 @@ type Doc = {
 };
 
 const DOCS: Doc[] = [
-  { code: 'INV', name: 'Tax Invoice',     icon: Receipt,       rim: 'rgba(232,201,122,0.95)', glow: 'rgba(232,201,122,0.6)', accent: '#E8C97A' },
-  { code: 'CHL', name: 'Delivery Challan', icon: Truck,         rim: 'rgba(94,234,212,0.9)',   glow: 'rgba(94,234,212,0.55)', accent: '#5EEAD4' },
-  { code: 'PRO', name: 'Proforma',        icon: FileText,      rim: 'rgba(167,139,250,0.9)',  glow: 'rgba(167,139,250,0.5)', accent: '#A78BFA' },
-  { code: 'QTN', name: 'Quotation',       icon: FileSignature, rim: 'rgba(244,114,182,0.9)',  glow: 'rgba(244,114,182,0.5)', accent: '#F472B6' },
-  { code: 'POS', name: 'POS Cash Memo',   icon: ShoppingBag,   rim: 'rgba(52,211,153,0.9)',   glow: 'rgba(52,211,153,0.5)',  accent: '#34D399' },
+  { code: 'INV', name: 'Tax Invoice',     icon: Receipt,       rim: '#E8C97A', glow: 'rgba(232,201,122,0.6)', accent: '#E8C97A' },
+  { code: 'CHL', name: 'Delivery Challan', icon: Truck,         rim: '#5EEAD4', glow: 'rgba(94,234,212,0.55)', accent: '#5EEAD4' },
+  { code: 'PRO', name: 'Proforma',        icon: FileText,      rim: '#A78BFA', glow: 'rgba(167,139,250,0.5)', accent: '#A78BFA' },
+  { code: 'QTN', name: 'Quotation',       icon: FileSignature, rim: '#F472B6', glow: 'rgba(244,114,182,0.5)', accent: '#F472B6' },
+  { code: 'POS', name: 'POS Cash Memo',   icon: ShoppingBag,   rim: '#34D399', glow: 'rgba(52,211,153,0.5)',  accent: '#34D399' },
 ];
 
 export function DocumentReel() {
