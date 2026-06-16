@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { FloatingShapes } from '@/components/FloatingShapes';
 
 type Tone = 'base' | 'warm' | 'hero';
 type Glow = 'gold' | 'teal' | 'violet';
@@ -25,6 +26,8 @@ export function Section({
   tone = 'base',
   grid = false,
   glow,
+  shapes = false,
+  mesh = false,
   size = 'normal',
   id,
   className = '',
@@ -34,6 +37,10 @@ export function Section({
   tone?: Tone;
   grid?: boolean;
   glow?: Glow;
+  /** drifting glass motion-graphics shapes behind the content */
+  shapes?: boolean;
+  /** Stripe-style flowing mesh-gradient backdrop */
+  mesh?: boolean;
   /** vertical padding scale */
   size?: 'tight' | 'normal' | 'loose';
   id?: string;
@@ -45,7 +52,9 @@ export function Section({
 
   return (
     <section id={id} className={`${TONE[tone]} noise-overlay relative overflow-hidden ${pad} ${className}`}>
+      {mesh && <div aria-hidden className="mesh-gradient" />}
       {grid && <div aria-hidden className="neon-grid" />}
+      {shapes && <FloatingShapes />}
       {glow && (
         <div
           aria-hidden

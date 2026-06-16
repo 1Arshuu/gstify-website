@@ -1,31 +1,23 @@
 'use client';
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
 import {
-  Sparkles as SparklesIcon, ArrowRight, Download, ShieldCheck,
+  Sparkles as SparklesIcon, ArrowRight, Download,
   CloudUpload, Receipt, Calculator, Globe, Banknote,
-  Smartphone, Layers, Star, Cpu, Check, X,
+  Smartphone, Layers, Cpu, Check, X,
 } from 'lucide-react';
 import { BRAND } from '@/lib/brand';
 import { Reveal } from '@/components/Reveal';
 import { Counter } from '@/components/Counter';
-import { Marquee } from '@/components/Marquee';
 import { Section } from '@/components/Section';
 import { SectionHeading } from '@/components/SectionHeading';
 import { SpotlightCard } from '@/components/SpotlightCard';
-import { InvoiceCard } from '@/components/InvoiceCard';
-import { Sparkles } from '@/components/Sparkles';
 import { Magnetic } from '@/components/Magnetic';
 import { Testimonials } from '@/components/Testimonials';
+import { CinematicHero } from '@/components/CinematicHero';
+import { CommandCenter } from '@/components/CommandCenter';
+import { HorizontalScroll } from '@/components/HorizontalScroll';
 
 const MUTED = '#9793A6';
-
-const marqueeItems = [
-  'Tax Invoice', '◇', 'Delivery Challan', '◇', 'Proforma', '◇',
-  'Quotation', '◇', 'POS Bill', '◇', '5 PDF Templates', '◇',
-  'Offline-First', '◇', 'Drive Backup', '◇', 'Per-line GST', '◇',
-];
 
 const compare: { label: string; free: string | boolean; pro: string | boolean }[] = [
   { label: 'Invoices / month',        free: '50',  pro: 'Unlimited' },
@@ -45,120 +37,10 @@ const faq = [
 ];
 
 export default function Home() {
-  const orb1 = useRef<HTMLDivElement>(null);
-  const orb2 = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const y = window.scrollY;
-        if (orb1.current) orb1.current.style.transform = `translateY(${(-y * 0.3).toFixed(1)}px)`;
-        if (orb2.current) orb2.current.style.transform = `translateY(${(-y * 0.18).toFixed(1)}px)`;
-      });
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf); };
-  }, []);
-
   return (
     <div>
-      {/* ════════════════════════ HERO ════════════════════════ */}
-      <section className="hero-bg relative overflow-x-clip">
-        <div aria-hidden className="neon-grid" />
-        <div ref={orb1} aria-hidden className="aurora-orb -top-40 -left-32 w-[560px] h-[560px] opacity-50"
-             style={{ background: 'radial-gradient(circle, rgba(232,201,122,0.5), transparent 70%)', position: 'absolute' }} />
-        <div ref={orb2} aria-hidden className="aurora-orb top-1/3 -right-40 w-[520px] h-[520px] opacity-45"
-             style={{ background: 'radial-gradient(circle, rgba(94,234,212,0.42), transparent 70%)', position: 'absolute' }} />
-        <Sparkles />
-
-        <div className="container mx-auto px-4 sm:px-6 max-w-6xl pt-16 sm:pt-24 lg:pt-32 pb-16 sm:pb-24 relative z-10">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-
-            <motion.div
-              initial={{ opacity: 1, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="lg:col-span-7 text-center lg:text-left"
-            >
-              <span className="chip">
-                <SparklesIcon className="h-3 w-3" strokeWidth={2.6} /> The future of GST billing
-              </span>
-
-              <h1 className="font-display text-dark-brown mt-6"
-                  style={{ fontSize: 'clamp(2.9rem, 7vw, 5.6rem)', lineHeight: 1.02, letterSpacing: '-0.02em', fontWeight: 600 }}>
-                GST billing for Indian SMBs,{' '}
-                <span className="gradient-text" style={{ fontStyle: 'italic', fontWeight: 600, animation: 'none' }}>
-                  reimagined.
-                </span>
-              </h1>
-
-              <p className="mt-7 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0" style={{ color: MUTED }}>
-                GSTify is the fastest way to create GST invoices on Android — five document types,
-                GST-ready PDFs, smart payment tracking and Google Drive backup. All on your phone,
-                all offline.
-              </p>
-
-              <div className="mt-9 flex gap-3 flex-wrap items-center justify-center lg:justify-start">
-                <Magnetic strength={0.4}>
-                  <a href={BRAND.playStoreUrl} target="_blank" rel="noopener noreferrer"
-                     className="gold-button rounded-2xl px-7 inline-flex items-center gap-2 text-[15px]" style={{ height: '54px' }}>
-                    <Download className="h-4 w-4" strokeWidth={2.8} /> Download Free
-                  </a>
-                </Magnetic>
-                <Magnetic strength={0.4}>
-                  <Link href="/features" className="outline-button rounded-2xl px-7 inline-flex items-center gap-2 text-[15px]" style={{ height: '54px' }}>
-                    Explore features <ArrowRight className="h-4 w-4" strokeWidth={2.6} />
-                  </Link>
-                </Magnetic>
-              </div>
-
-              <div className="mt-9 flex items-center gap-x-5 gap-y-3 flex-wrap justify-center lg:justify-start">
-                <div className="flex items-center gap-2">
-                  <div className="flex gap-0.5">
-                    {[0, 1, 2, 3, 4].map((i) => (
-                      <Star key={i} className="h-4 w-4 fill-[#E8C97A] text-[#E8C97A]" strokeWidth={1.5}
-                            style={{ filter: 'drop-shadow(0 0 6px rgba(232,201,122,0.7))' }} />
-                    ))}
-                  </div>
-                  <span className="text-sm font-bold text-dark-brown">4.9</span>
-                </div>
-                <span aria-hidden className="hidden sm:block h-4 w-px" style={{ background: 'rgba(232,201,122,0.3)' }} />
-                <div className="flex items-center gap-1.5 text-xs font-semibold" style={{ color: MUTED }}>
-                  <ShieldCheck className="h-3.5 w-3.5 text-gold" strokeWidth={2.6} /> No credit card
-                </div>
-                <span className="chip-teal">Made in India</span>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 14 }} animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="hidden lg:flex lg:col-span-5 justify-center relative"
-            >
-              <div aria-hidden className="absolute inset-0 m-auto w-[460px] h-[460px] rounded-full pointer-events-none opacity-60 animate-lux-rotate"
-                   style={{ background: 'conic-gradient(from 0deg, transparent, rgba(232,201,122,0.55), transparent 40%, rgba(94,234,212,0.45), transparent 75%)', filter: 'blur(46px)' }} />
-              <div className="invoice-3d relative animate-lux-float-y">
-                <div className="invoice-spin"><InvoiceCard /></div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        <div className="relative z-10">
-          <div className="divider-hairline mx-auto max-w-6xl" />
-          <div className="py-3">
-            <Marquee speed={14}>
-              {marqueeItems.map((item, i) => (
-                <span key={i} className={`text-sm font-extrabold uppercase ${item === '◇' ? 'text-[#5EEAD4]/50' : 'text-[#C9A86A]'}`}
-                      style={{ letterSpacing: '0.18em' }}>{item}</span>
-              ))}
-            </Marquee>
-          </div>
-          <div className="divider-hairline mx-auto max-w-6xl" />
-        </div>
-      </section>
+      {/* ════════════════════════ CINEMATIC HERO ════════════════════════ */}
+      <CinematicHero />
 
       {/* ════════════════════════ STATS ════════════════════════ */}
       <Section tone="base" grid>
@@ -188,6 +70,18 @@ export default function Home() {
             </Reveal>
           ))}
         </div>
+      </Section>
+
+      {/* ════════════════════════ COMMAND CENTER ════════════════════════ */}
+      <Section tone="base" mesh>
+        <SectionHeading
+          eyebrow="Command center"
+          title={<>Your whole business, <span className="gradient-text italic">on one screen.</span></>}
+          body="Revenue, GST collected, pending payments and recent invoices — GSTify turns every bill into a live, at-a-glance dashboard."
+        />
+        <Reveal className="mt-14 sm:mt-16">
+          <CommandCenter />
+        </Reveal>
       </Section>
 
       {/* ════════════════════════ BENTO FEATURES ════════════════════════ */}
@@ -287,12 +181,14 @@ export default function Home() {
       </Section>
 
       {/* ════════════════════════ TESTIMONIALS ════════════════════════ */}
-      <Section tone="warm" glow="gold">
+      <Section tone="warm" glow="gold" shapes>
         <Testimonials />
       </Section>
 
+      {/* ═══ HORIZONTAL-SCROLL BAND · Free-vs-Pro → Final CTA (desktop) ═══ */}
+      <HorizontalScroll>
       {/* ════════════════════════ FREE vs PRO ════════════════════════ */}
-      <Section tone="base" grid>
+      <Section tone="base" grid size="tight" className="lg:min-h-screen lg:flex lg:flex-col lg:justify-center">
         <SectionHeading
           eyebrow="Free vs Pro"
           title={<>Start free. <span className="gradient-text italic">Scale when ready.</span></>}
@@ -320,7 +216,7 @@ export default function Home() {
       </Section>
 
       {/* ════════════════════════ FAQ ════════════════════════ */}
-      <Section tone="warm">
+      <Section tone="warm" size="tight" className="lg:min-h-screen lg:flex lg:flex-col lg:justify-center">
         <SectionHeading eyebrow="Questions?" title={<>Everything you <span className="gradient-text italic">want to know.</span></>} />
         <div className="mt-12 max-w-3xl mx-auto space-y-3">
           {faq.map((f, i) => (
@@ -339,7 +235,7 @@ export default function Home() {
       </Section>
 
       {/* ════════════════════════ PRICING CTA ════════════════════════ */}
-      <Section tone="base">
+      <Section tone="base" size="tight" className="lg:min-h-screen lg:flex lg:flex-col lg:justify-center">
         <Reveal>
           <div className="banner-bg gold-border noise-overlay rounded-3xl p-8 sm:p-12 lg:p-16 text-center relative overflow-hidden">
             <div aria-hidden className="cta-aurora" />
@@ -371,7 +267,7 @@ export default function Home() {
       </Section>
 
       {/* ════════════════════════ FINAL CTA ════════════════════════ */}
-      <Section tone="warm" containerClassName="max-w-4xl">
+      <Section tone="warm" shapes size="tight" className="lg:min-h-screen lg:flex lg:flex-col lg:justify-center" containerClassName="max-w-4xl">
         <Reveal>
           <div className="cta-cream p-10 sm:p-14 lg:p-16 text-center">
             <div aria-hidden className="cta-aurora" />
@@ -401,6 +297,7 @@ export default function Home() {
           </div>
         </Reveal>
       </Section>
+      </HorizontalScroll>
     </div>
   );
 }

@@ -61,7 +61,7 @@ export const Header = () => {
         moving to the top reveals the menu. Only shows while the bar is hidden. */}
     <div
       aria-hidden
-      className="fixed top-0 left-0 right-0 z-40 pointer-events-none transition-opacity duration-300"
+      className="fixed top-0 left-0 right-0 z-[99999998] pointer-events-none transition-opacity duration-300"
       style={{
         height: 3,
         opacity: isHidden ? 1 : 0,
@@ -69,14 +69,14 @@ export const Header = () => {
       }}
     />
     <header
-      className={cn('sticky top-0 z-50 header-melt', scrolled && 'is-scrolled')}
+      className={cn('sticky top-0 z-[99999999] header-melt', scrolled && 'is-scrolled')}
       style={{
         transform: isHidden ? 'translateY(-100%)' : 'translateY(0)',
         transition: 'transform 0.45s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease',
         willChange: 'transform',
       }}
     >
-      <nav className="relative z-10 container mx-auto px-3 sm:px-6 max-w-6xl h-16 flex items-center justify-between">
+      <nav className="relative z-10 container mx-auto px-3 sm:px-6 max-w-6xl h-20 flex items-center justify-between">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2.5 group">
           <span

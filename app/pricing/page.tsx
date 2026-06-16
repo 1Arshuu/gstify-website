@@ -1,5 +1,5 @@
 'use client';
-import { Check, X, Download, Crown, Briefcase, Sparkles, CloudUpload, AlertTriangle, Package } from 'lucide-react';
+import { Check, X, Download, Crown, Briefcase, Sparkles, CloudUpload, AlertTriangle, Monitor } from 'lucide-react';
 import { BRAND } from '@/lib/brand';
 import { Reveal } from '@/components/Reveal';
 import { Section } from '@/components/Section';
@@ -19,7 +19,7 @@ const plans = [
       { text: 'GSTify watermark on PDFs',    on: true  },
       { text: 'GST auto-fetch by GSTIN',     on: false },
       { text: 'All 5 invoice templates',     on: false },
-      { text: 'PC / web login',              on: false },
+      { text: 'GSTify PC app (.apk)',              on: false },
     ],
   },
   {
@@ -36,7 +36,7 @@ const plans = [
       { text: 'No watermark on PDFs',        on: true },
       { text: 'GST auto-fetch by GSTIN',     on: true },
       { text: 'All 5 invoice templates',     on: true },
-      { text: 'PC / web login',              on: false },
+      { text: 'GSTify PC app (.apk)',              on: false },
     ],
   },
   {
@@ -48,7 +48,7 @@ const plans = [
     features: [
       { text: 'Everything in Pro',           on: true },
       { text: 'Up to 5 devices',             on: true },
-      { text: 'PC / web login',              on: true },
+      { text: 'GSTify PC app (.apk)',              on: true },
       { text: 'Dedicated support',           on: true },
       { text: 'Early access to new features',on: true },
       { text: 'Custom branding (soon)',      on: true },
@@ -159,26 +159,27 @@ export default function Pricing() {
           </div>
         </Reveal>
 
-        {/* Business perk — direct .apk download (sideload) */}
+        {/* Business perk — use GSTify on a PC via the downloadable desktop .apk */}
         <Reveal className="mt-4 max-w-3xl mx-auto">
           <div className="rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 app-card">
             <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl flex-shrink-0 gold-gradient text-[#1A1205]"
                   style={{ boxShadow: '0 0 24px rgba(232,201,122,0.5)' }}>
-              <Package className="h-5 w-5" strokeWidth={2.4} />
+              <Monitor className="h-5 w-5" strokeWidth={2.4} />
             </span>
             <div className="flex-1">
               <p className="font-display text-lg font-extrabold text-dark-brown flex items-center gap-2" style={{ letterSpacing: '-0.01em' }}>
-                Get the GSTify .apk <span className="chip-teal">Business</span>
+                Want GSTify on your PC? <span className="chip-teal">Business</span>
               </p>
               <p className="mt-1.5 text-[14px] leading-relaxed" style={{ color: '#9793A6' }}>
-                Business subscribers can download the packaged GSTify <strong>.apk</strong> to sideload on
-                managed or Play-restricted devices — the same app, installed your way.
+                GSTify is a mobile-first app. To run it on a computer, subscribe to <strong>Business</strong> and
+                download the GSTify <strong>PC app (.apk)</strong> — the full app, installed on your desktop.
+                There is <strong>no web login</strong>; your data simply syncs across your phone and PC.
               </p>
             </div>
             <a href={BRAND.playStoreUrl} target="_blank" rel="noopener noreferrer"
                className="gold-button rounded-xl px-6 inline-flex items-center justify-center gap-2 text-[14px] whitespace-nowrap"
                style={{ height: '48px' }}>
-              <Download className="h-4 w-4" strokeWidth={2.8} /> Unlock with Business
+              <Download className="h-4 w-4" strokeWidth={2.8} /> Get Business
             </a>
           </div>
         </Reveal>

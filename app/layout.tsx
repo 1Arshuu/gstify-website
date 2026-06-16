@@ -4,6 +4,7 @@ import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import SplashCursorLoader from '@/components/SplashCursorLoader';
+import { ScrollProgress } from '@/components/ScrollProgress';
 import { BRAND } from '@/lib/brand';
 
 // Display / headings — geometric sans (matches the app's heading font)
@@ -158,6 +159,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             the content so it glows through the translucent section surfaces and
             fills the hero; desktop/fine-pointer only, off under reduced motion. */}
         <SplashCursorLoader />
+        {/* Awwwards detail: neon scroll-progress bar pinned to the very top. */}
+        <ScrollProgress />
         {/* Ivory Gold signature: drifting gold-dust field behind everything.
             Content sits in the z-1 .gm-content wrapper; section surfaces are
             slightly translucent so the dust shimmers through. */}
